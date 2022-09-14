@@ -1,7 +1,10 @@
+import AgentLogin from "./pages/AgentLogin";
 
 function App() {
   return (
-    <div></div>
+    <>
+      <AgentLogin />
+    </>
   );
 }
 
