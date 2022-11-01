@@ -8,6 +8,7 @@ import AgentsComp from '../components/AgentsComp'
 import { useEffect } from 'react'
 import AgentsList from '../lists/AgentsList'
 import ReactPaginate from 'react-paginate'
+import axios from '../Api/axios'
 
 const Agents = () => {
 
@@ -20,6 +21,20 @@ const Agents = () => {
    // following the API or data you're working with.
    const [itemOffset, setItemOffset] = useState(0);
    const [itemsPerPage, setItemsPerPage] = useState(8);
+
+
+   useEffect(() => {
+
+      var config = {
+         method: 'get',
+         url: '{{BaseUrl}}/qa/getAgents',
+         headers: {}
+      };
+
+      axios(config).then((res) => {
+         console.log(res)
+      })
+   }, [])
 
    useEffect(() => {
       // Fetch items from another resources.

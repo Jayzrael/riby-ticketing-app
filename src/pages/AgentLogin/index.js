@@ -64,7 +64,7 @@ const AgentLogin = () => {
             console.log(msg)
             if (!err?.response) {
                toast.error('No server response', {
-                  position: "top-center",
+                  position: "top-right",
                   autoClose: 5000,
                   hideProgressBar: false,
                   closeOnClick: true,
@@ -75,7 +75,7 @@ const AgentLogin = () => {
                });
             } else if (err.response?.status === 400) {
                toast.error('invalid email or password', {
-                  position: "top-center",
+                  position: "top-right",
                   autoClose: 5000,
                   hideProgressBar: false,
                   closeOnClick: true,
@@ -86,7 +86,7 @@ const AgentLogin = () => {
                });
             } else if (err.response?.status === 401) {
                toast.error('Unauthorized', {
-                  position: "top-center",
+                  position: "top-right",
                   autoClose: 5000,
                   hideProgressBar: false,
                   closeOnClick: true,
@@ -97,7 +97,7 @@ const AgentLogin = () => {
                });
             } else {
                toast.error('Login failed', {
-                  position: "top-center",
+                  position: "top-right",
                   autoClose: 5000,
                   hideProgressBar: false,
                   closeOnClick: true,
@@ -183,7 +183,7 @@ const AgentLogin = () => {
          </div>
 
          <ToastContainer
-            position="top-center"
+            position="top-right"
             autoClose={5000}
             hideProgressBar={false}
             newestOnTop={false}

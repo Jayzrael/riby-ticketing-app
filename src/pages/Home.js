@@ -13,7 +13,7 @@ const Home = () => {
    const [pageCount, setPageCount] = useState(0);
    const [itemOffset, setItemOffset] = useState(0);
    const [itemsPerPage, setItemsPerPage] = useState(8);
-   const Agent = true;
+   // const Agent = true;
 
    useEffect(() => {
       const endOffset = itemOffset + itemsPerPage;
