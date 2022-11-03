@@ -144,8 +144,8 @@ const AgentLogin = () => {
                      {errMsg}
                   </p>
                </section>
-               <div className='w-[352px] h-[384px] max-w-[500px] my-7'>
-                  <form className='flex flex-col w-full h-full min-h-[67vh]  bg-white rounded-[10px]'
+               <div className='w-[352px] h-[388px] max-w-[500px] my-7'>
+                  <form className='flex flex-col w-full h-full  bg-white rounded-[10px]'
                      onSubmit={handleSubmit}>
                      <h2 className='text-[#0D233D] font-[600] text-[24px] text-center mt-10'>Sign In</h2>
                      <div className='flex flex-col justify-center text-[#0D233D] m-4 '>

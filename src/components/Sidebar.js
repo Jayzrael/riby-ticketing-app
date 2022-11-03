@@ -42,7 +42,7 @@ const Sidebar = () => {
       },
    ])
 
-   const [agentRole, setAgentRole] = useState(false)
+   const [agentRole, setAgentRole] = useState(true)
 
    const agentNav = [
       {
