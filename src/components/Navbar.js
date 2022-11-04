@@ -20,13 +20,13 @@ const Navbar = () => {
             <div><img src={Inbox} alt="" /></div>
             <div><img src={Notification} alt="" /></div>
             <div>
-               <Link to="/profile"><img src={Profile} alt="" /></Link>
+               <Link to=""><img src={Profile} alt="" /></Link>
             </div>
             <div className='relative pr-10' onClick={handleMenu}><img src={ArrowDown} alt="" />
                {drop && (
                   <div class="absolute right-0 z-10 p-3 w-[136px] h-[96px] rounded-[10px] box-border mt-8  origin-top-right bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                      <div className='flex flex-col justify-start gap-3 pt-2'>
-                        <a href="#" class="text-gray-700 text-[12px] font-[400]">Profile</a>
+                        <Link to="/profile" class="text-gray-700 text-[12px] font-[400]">Profile</Link>
                         <a className="text-red-700 w-full text-[12px] font-[400]">Sign out</a>
                      </div>
                   </div>

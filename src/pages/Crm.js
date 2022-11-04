@@ -3,12 +3,11 @@ import Sidebar from '../components/Sidebar'
 import Navbar from '../components/Navbar'
 import Button from '../components/Button'
 import { BsCircle } from 'react-icons/bs'
-import AgentForm from '../components/AgentForm'
 import { useEffect } from 'react'
-import AgentsList from '../lists/AgentsList'
 import ReactPaginate from 'react-paginate'
 import CrmComp from '../components/CrmComp'
 import CustomerList from '../lists/CustomerList'
+import CustomerForm from '../components/CustomerForm'
 
 const Crm = () => {
 
@@ -41,7 +40,7 @@ const Crm = () => {
 
    return (
       <div className='flex'>
-         {open && (<AgentForm Close={handleClose} />)}
+         {open && (<CustomerForm Close={handleClose} />)}
          <Sidebar />
          <div className="w-full h-full">
             <Navbar />

@@ -13,7 +13,7 @@ const ItemCard = ({ TicketId, TicketName, TicketTime, TicketStatus, Dots }) => {
    }
 
    return (
-      <div className='flex justify-between min-w-[976px] bg-white h-[56px] rounded-[10px] m-4 p-4'>
+      <div className='flex justify-between w-[976px] bg-white h-[56px] rounded-[10px] m-4 p-4'>
          <div className='flex justify-center items-center gap-4'>
             <div>
                <input className='accent-red-500 line-through' type="checkbox" name="check" />
