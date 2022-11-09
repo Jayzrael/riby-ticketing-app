@@ -108,7 +108,7 @@ const Analytics = () => {
 
                         {/* card  0.5px solid ;*/}
                         <ResponseCard
-                           ClassName="flex flex-col gap-9 bg-white w-[400px] h-[296px] border-[0.5px] border-[#F1F1F1] border-solid rounded-[10px] p-3"
+                           ClassName="flex flex-col gap-9 bg-white min-w-[400px] h-[296px] border-[0.5px] border-[#F1F1F1] border-solid rounded-[10px] p-3"
                            ClassName0='text-[#0D233D] text-[16px] font-[500]'
                            ClassName1='flex gap-[150px]'
                            ClassName2='flex gap-[179px]'
@@ -138,7 +138,7 @@ const Analytics = () => {
 
                         {/* chart  */}
                         <div>
-                           <ResponseCard ClassName="flex flex-col gap-[22px] bg-white w-[552px] h-[232px] border-[0.5px] border-[#F1F1F1] border-solid rounded-[10px] p-3 ml-2"
+                           <ResponseCard ClassName="flex flex-col gap-[22px] bg-white min-w-[552px] h-[232px] border-[0.5px] border-[#F1F1F1] border-solid rounded-[10px] p-3 ml-2"
                               ClassName0='text-[#0D233D] text-[16px] font-[500]'
                               ClassName1='flex gap-[300px]'
                               ClassName2='flex gap-[328px]'

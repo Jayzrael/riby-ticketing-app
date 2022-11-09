@@ -12,6 +12,7 @@ import TicketDetails from "./components/Tickets/TicketDetails";
 import AgentForm from "./components/AgentForm";
 import Profile from "./pages/Profile";
 import Crm from "./pages/Crm";
+import CustomerFormPage from "./components/CustomerFormPage";
 
 function App() {
   return (
@@ -27,6 +28,8 @@ function App() {
           <Route path="/agentForm" element={<AgentForm />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/crm" element={<Crm />} />
+          <Route path="/customerFormPage" element={<CustomerFormPage />} />
+
         </Routes>
       </Router >
     </>

@@ -7,12 +7,18 @@ import { useEffect } from 'react'
 import ReactPaginate from 'react-paginate'
 import CrmComp from '../components/CrmComp'
 import CustomerList from '../lists/CustomerList'
-import CustomerForm from '../components/CustomerForm'
+import CustomerFormPage from '../components/CustomerFormPage'
+import { useNavigate } from 'react-router-dom'
 
 const Crm = () => {
 
+   const navigate = useNavigate()
+
    const [open, setOpen] = useState(false)
-   const handleOpen = () => setOpen(true);
+   const handleOpen = () => {
+      setOpen(true);
+      navigate("/customerFormPage")
+   }
    const handleClose = () => setOpen(false);
    const [currentItems, setCurrentItems] = useState(null);
    const [pageCount, setPageCount] = useState(0);
@@ -40,7 +46,7 @@ const Crm = () => {
 
    return (
       <div className='flex'>
-         {open && (<CustomerForm Close={handleClose} />)}
+         {open && (<CustomerFormPage />)}
          <Sidebar />
          <div className="w-full h-full">
             <Navbar />
@@ -51,7 +57,7 @@ const Crm = () => {
                   <h1 className='text-[24px] font-[600]'>CRM</h1>
                   {/* input and button  */}
                   <div className='flex gap-4 mr-10'>
-                     <div className={open ? "hidden" : ""}>
+                     <div>
                         <BsCircle color='#C9C9C9' className='absolute z-10 top-[17.5%] right-[33%]' />  <input className='relative w-[272px] h-[40px] border-[1px] border-solid border-[#C9C9C9] rounded-[5px] pl-12 outline-none' type="search" name="" id="" placeholder='Search for agents' />
                      </div>
                      <div>

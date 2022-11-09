@@ -1,6 +1,5 @@
 import React from 'react'
 import { HiOutlineDotsHorizontal } from 'react-icons/hi'
-import Marker from '../assets/Marker.png'
 
 const CrmComp = ({ currentItem }) => {
    return (
