@@ -107,7 +107,6 @@ const AgentLogin = () => {
                   theme: "colored",
                });
             }
-            errRef.current.focus();
          })
    }
 
