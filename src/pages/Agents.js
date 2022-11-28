@@ -79,18 +79,18 @@ const Agents = () => {
                </div>
 
                {/* Agents 0.5px solid #D9D8DA*/}
-               <div className='mt-16 w-[976px] h-[488px] border-[0.5px] border-solid border-[#D9D8DA] rounded-[10px] ml-10'>
+               {/* <div className='mt-16 w-[976px] h-[488px] border-[0.5px] border-solid border-[#D9D8DA] rounded-[10px] ml-10'> */}
 
                   {/* header of table for agents  */}
-                  <div className='bg-[#EAEAF0] w-full h-[40px] flex items-center  rounded-r-[10px] rounded-l-[10px] pl-8'>
+                  {/* <div className='bg-[#EAEAF0] w-full h-[40px] flex items-center  rounded-r-[10px] rounded-l-[10px] pl-8'>
                      <h2 className='pl-4'>Agent Name</h2>
                      <h2 className='pl-[100px]'>Email Address</h2>
                      <h2 className='pl-[105px]'>Date Joined</h2>
                      <h2 className='pl-[60px]'>Extension</h2>
                      <h2 className='pl-[70px]'>Status</h2>
-                  </div>
-                  <AgentsComp currentItem={currentItems} />
-                  <ReactPaginate
+                  </div> */}
+                  <AgentsComp />
+                  {/* <ReactPaginate
                      className='flex justify-end gap-5 text-blue-800'
                      activeClassName='text-blue-800 pt-1 pb-1 pl-2 pr-2 border-[2px] border-blue-800'
                      breakLabel="..."
@@ -100,8 +100,8 @@ const Agents = () => {
                      pageCount={pageCount}
                      previousLabel="< previous"
                      renderOnZeroPageCount={null}
-                  />
-               </div>
+                  /> */}
+               {/* </div> */}
             </section>
 
          </div>

@@ -67,7 +67,7 @@ const Analytics = () => {
       }
    ]
 
-   const agentRole = false;
+   const agentRole = true;
 
    return (
       <div className='flex'>
@@ -77,7 +77,7 @@ const Analytics = () => {
             <div className='bg-slate-100 w-full h-full p-8'>
 
                {/* content  */}
-               {agentRole == false ? (
+               {agentRole == true ? (
                   <div>
                      <section>
                         <h1 className='text-[24px] font-[600] text-[#0D233D] mb-5'>Analytics</h1>

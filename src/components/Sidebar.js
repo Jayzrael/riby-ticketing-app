@@ -77,7 +77,7 @@ const Sidebar = () => {
 
    useEffect(() => {
 
-      if (agentRole == true) {
+      if (agentRole == false) {
          setNavBarList(agentNav)
       }
    }, [])
