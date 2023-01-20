@@ -1,59 +1,93 @@
-import React, { useState } from 'react'
-import Sidebar from '../components/Sidebar'
-import Navbar from '../components/Navbar'
-import TicketHeader from '../components/Tickets/TicketHeader'
-import TicketList from '../lists/TicketList'
-import Ticket from '../components/Tickets/Ticket'
-import { useEffect } from 'react'
-import ReactPaginate from 'react-paginate'
+import React, { useState } from "react";
+import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Navbar";
+import { useEffect } from "react";
+import axios, { BaseUrl } from "../Api/axios";
+import closeTicket from "../assets/closeticket.png";
+import assignTicket from "../assets/assignticket.png";
+import deleteTicket from "../assets/deleteticket.png";
+import Ticket from "../components/Tickets/Ticket";
+import dots from "../assets/dots.png";
 
 const Home = () => {
+  const [ticketData, setTicketData] = useState([]);
+  const [isChecked, setIsChecked] = useState(false);
 
-   const [currentItems, setCurrentItems] = useState(null);
-   const [pageCount, setPageCount] = useState(0);
-   const [itemOffset, setItemOffset] = useState(0);
-   const [itemsPerPage, setItemsPerPage] = useState(8);
-   // const Agent = true;
+  const handleOnChange = () => {
+    setIsChecked(!isChecked);
+  };
 
-   useEffect(() => {
-      const endOffset = itemOffset + itemsPerPage;
-      console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-      setCurrentItems(TicketList.slice(itemOffset, endOffset));
-      setPageCount(Math.ceil(TicketList.length / itemsPerPage));
-   }, [itemOffset, itemsPerPage]);
+  const getData = () => {
+    var config = {
+      method: "get",
+      url: `${BaseUrl}/tickets`,
+      headers: {},
+    };
 
-   const handlePageClick = (event) => {
-      const newOffset = (event.selected * itemsPerPage) % TicketList.length;
-      console.log(
-         `User requested page number ${event.selected}, which is offset ${newOffset}`
-      );
-      setItemOffset(newOffset);
-   };
+    axios(config)
+      .then((res) => {
+        console.log(res.data.tickets);
+        setTicketData(res.data.tickets);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-   return (
-      <div className='flex'>
-         <Sidebar />
-         <div className="w-full h-full">
-            <Navbar />
-            <div className='bg-slate-100 w-full h-full p-8'>
-               <TicketHeader />
-               <Ticket currentItems={currentItems} />
-               <ReactPaginate
-                  className='flex justify-end gap-5 text-blue-800'
-                  activeClassName='text-blue-800 pt-1 pb-1 pl-2 pr-2 border-[2px] border-blue-800'
-                  breakLabel="..."
-                  nextLabel="next >"
-                  onPageChange={handlePageClick}
-                  pageRangeDisplayed={5}
-                  pageCount={pageCount}
-                  previousLabel="< previous"
-                  renderOnZeroPageCount={null}
-               />
+  useEffect(() => {
+    getData();
+  }, []);
+
+  return (
+    <div className="flex">
+      <Sidebar />
+      <div className="w-full h-full">
+        <Navbar />
+        <div className="bg-slate-100 w-full h-screen p-8">
+          <section className="flex justify-between">
+            <h1 className="text-2xl font-bold">Tickets</h1>
+            <div className="flex gap-8">
+              <div className={isChecked ? "flex gap-4" : "hidden"}>
+                <div className="flex justify-center items-center gap-1 cursor-pointer">
+                  {" "}
+                  <img src={closeTicket} alt="" />
+                  Close ticket
+                </div>
+                <div className="flex justify-center items-center gap-1 cursor-pointer">
+                  {" "}
+                  <img src={assignTicket} alt="" />
+                  Assign ticket
+                </div>
+                <div className="flex justify-center items-center gap-1 cursor-pointer">
+                  {" "}
+                  <img src={deleteTicket} alt="" />
+                  Delete ticket
+                </div>
+              </div>
+              <select name="" id="" className="p-2 min-w-[184px] outline-none">
+                <option value="All tickets (24)">All tickets (24)</option>
+                <option value="All tickets (24)">Ticket 1</option>
+                <option value="All tickets (24)">Ticket 2</option>
+                <option value="All tickets (24)">Ticket 3</option>
+              </select>
             </div>
+          </section>
 
-         </div>
+          {/* Tickets */}
+          <section className="mt-10">
+            {ticketData.map((tickets) => (
+              <Ticket
+                ticket={tickets}
+                TicketTime="1 hour ago"
+                HandleOnChange={handleOnChange}
+                IsChecked={isChecked}
+              />
+            ))}
+          </section>
+        </div>
       </div>
-   )
-}
+    </div>
+  );
+};
 
-export default Home
+export default Home;
