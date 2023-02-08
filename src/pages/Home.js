@@ -8,10 +8,17 @@ import assignTicket from "../assets/assignticket.png";
 import deleteTicket from "../assets/deleteticket.png";
 import Ticket from "../components/Tickets/Ticket";
 import dots from "../assets/dots.png";
+import AssignTicket from "../components/Tickets/AssignTicket";
 
 const Home = () => {
   const [ticketData, setTicketData] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+
+  const OpenModal = () => {
+    setOpenModal(!openModal);
+  };
+  const CloseModal = () => setOpenModal(false);
 
   const handleOnChange = () => {
     setIsChecked(!isChecked);
@@ -40,6 +47,7 @@ const Home = () => {
 
   return (
     <div className="flex">
+      {/* {openModal && <AssignTicket CloseModal={CloseModal} />} */}
       <Sidebar />
       <div className="w-full h-full">
         <Navbar />
@@ -81,6 +89,7 @@ const Home = () => {
                 TicketTime="1 hour ago"
                 HandleOnChange={handleOnChange}
                 IsChecked={isChecked}
+                OpenModal={openModal}
               />
             ))}
           </section>

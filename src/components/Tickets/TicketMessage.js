@@ -10,7 +10,7 @@ const TicketMessage = () => {
     setDrop(!drop);
   };
   return (
-    <div className="bg-white mt-7 w-[976px] h-[526px] rounded-[10px]">
+    <div className="bg-white mt-7 min-w-[97.6vh] min-h-[90vh] rounded-[10px]">
       <div className="flex justify-between items-center bg-white p-5 rounded-[10px]">
         <span>#456 No Loan Records </span>
         <img
@@ -31,7 +31,7 @@ const TicketMessage = () => {
       )}
       {/* message */}
       <section className="flex justify-center items-center mt-2">
-        <div className="w-[944px] h-[408px] bg-white rounded-[10px] border-[0.5px] border-[#D9D8DA] border-solid mt-[26px]">
+        <div className="min-w-[944px] min-h-[408px] bg-white rounded-[10px] border-[0.5px] border-[#D9D8DA] border-solid mt-[26px]">
           <p className="w-[655px] h-[312px] text-[16px] font-[300] text-[#0D233D] leading-6 bg-white ml-[24px] mt-[46px]">
             Hi, <br />
             <br />A new ticket has been created by John Doe on 4 August 2022 -

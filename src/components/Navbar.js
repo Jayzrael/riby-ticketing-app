@@ -5,12 +5,29 @@ import Profile from "../assets/profile.png";
 import ArrowDown from "../assets/arrowdown.png";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import axios, { BaseUrl } from "../Api/axios";
 
 const Navbar = () => {
   const [drop, setDrop] = useState(false);
 
   const handleMenu = () => {
     setDrop(!drop);
+  };
+
+  const signOut = () => {
+    var config = {
+      method: "get",
+      url: `${BaseUrl}/logout`,
+      headers: {},
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   return (
@@ -38,7 +55,10 @@ const Navbar = () => {
                 >
                   Profile
                 </Link>
-                <a className="text-red-700 w-full text-[12px] font-[400]">
+                <a
+                  className="text-red-700 w-full text-[12px] font-[400]"
+                  onClick={signOut}
+                >
                   Sign out
                 </a>
               </div>

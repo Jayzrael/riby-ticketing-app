@@ -4,9 +4,9 @@
   "private": true,
   "dependencies": {
     "@coreui/react-chartjs": "^2.1.0",
-    "@emotion/react": "^11.10.4",
-    "@emotion/styled": "^11.10.4",
-    "@mui/material": "^5.10.7",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/material": "^5.11.6",
     "apexcharts": "^3.35.5",
     "axios": "^1.1.2",
     "bootstrap": "^5.2.2",

@@ -26,8 +26,8 @@ const ResetPwdModal = ({ Close }) => {
 
     var data = { email };
     var config = {
-      method: "POST",
-      url: `${BaseUrl}/qa/resetPassword`,
+      method: "patch",
+      url: `${BaseUrl}/forgotPassword`,
       headers: {},
       data: data,
     };
@@ -40,8 +40,7 @@ const ResetPwdModal = ({ Close }) => {
         setSuccess(true);
       })
       .catch((err) => {
-        const { message } = err.response.data;
-        const msg = message[0].message;
+        const msg = err.message;
         console.log(msg);
         if (!err?.response) {
           toast.error("No server response", {
@@ -55,7 +54,7 @@ const ResetPwdModal = ({ Close }) => {
             theme: "colored",
           });
         } else if (err.response?.status === 400) {
-          toast.error("invalid email or password", {
+          toast.error("invalid email", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -77,7 +76,7 @@ const ResetPwdModal = ({ Close }) => {
             theme: "colored",
           });
         } else {
-          toast.error("Login failed", {
+          toast.error("failed", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,

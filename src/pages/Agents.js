@@ -18,32 +18,8 @@ const Agents = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(!open);
-    // navigate("/customerFormPage");
   };
   const handleClose = () => setOpen(false);
-  const [currentItems, setCurrentItems] = useState(null);
-  const [pageCount, setPageCount] = useState(0);
-  // Here we use item offsets; we could also use page offsets
-  // following the API or data you're working with.
-  const [itemOffset, setItemOffset] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState(8);
-
-  useEffect(() => {
-    // Fetch items from another resources.
-    const endOffset = itemOffset + itemsPerPage;
-    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-    setCurrentItems(CustomerList.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(CustomerList.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage]);
-
-  // Invoke when user click to request another page.
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % CustomerList.length;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
-    setItemOffset(newOffset);
-  };
 
   return (
     <div className="flex">
@@ -82,27 +58,7 @@ const Agents = () => {
 
           {/* Agents 0.5px solid #D9D8DA*/}
           <div className="mt-16 w-[976px] h-[488px] border-[0.5px] border-solid border-[#D9D8DA] rounded-[10px] ml-10">
-            {/* header of table for agents  */}
-            <div className="bg-[#EAEAF0] w-full h-[40px] flex items-center  rounded-r-[10px] rounded-l-[10px] pl-8">
-              <h2 className="pl-4">Agent Name</h2>
-              <h2 className="pl-[90px]">Email Address</h2>
-              <h2 className="pl-[93px]">Date Joined</h2>
-              <h2 className="pl-[70px]">Extension</h2>
-              <h2 className="pl-[66px]">Status</h2>
-            </div>
-
-            <CrmComp currentItem={currentItems} />
-            <ReactPaginate
-              className="flex justify-end gap-5 text-blue-800"
-              activeClassName="text-blue-800 pt-1 pb-1 pl-2 pr-2 border-[2px] border-blue-800"
-              breakLabel="..."
-              nextLabel="next >"
-              onPageChange={handlePageClick}
-              pageRangeDisplayed={5}
-              pageCount={pageCount}
-              previousLabel="< previous"
-              renderOnZeroPageCount={null}
-            />
+            <CrmComp />
           </div>
         </section>
       </div>

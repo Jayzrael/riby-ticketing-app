@@ -8,17 +8,13 @@ import ReactPaginate from "react-paginate";
 import CrmComp from "../components/CrmComp";
 import CustomerList from "../lists/CustomerList";
 import CustomerFormPage from "../components/CustomerFormPage";
-import { useNavigate } from "react-router-dom";
 
 const Crm = () => {
-  const navigate = useNavigate();
-
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(true);
-    navigate("/customerFormPage");
   };
-  const handleClose = () => setOpen(false);
+  const handleClose = () => setOpen(!open);
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
   // Here we use item offsets; we could also use page offsets
@@ -45,7 +41,7 @@ const Crm = () => {
 
   return (
     <div className="flex">
-      {open && <CustomerFormPage />}
+      {open && <CustomerFormPage Close={handleClose} />}
       <Sidebar />
       <div className="w-full h-full">
         <Navbar />
@@ -55,7 +51,7 @@ const Crm = () => {
             <h1 className="text-[24px] font-[600]">CRM</h1>
             {/* input and button  */}
             <div className="flex gap-4 mr-10">
-              <div>
+              <div className={open ? "hidden" : ""}>
                 <BsCircle
                   color="#C9C9C9"
                   className="absolute z-10 top-[17.5%] right-[33%]"
@@ -70,7 +66,7 @@ const Crm = () => {
               </div>
               <div>
                 <Button
-                  ButtonText="Create Ticket"
+                  ButtonText="Create Agent"
                   ClassName="bg-[#EE095B] w-[120px] h-[40px] text-white rounded-[5px] text-[14px] font-[600]"
                   HandleOpen={handleOpen}
                 />

@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { GiCancel } from "react-icons/gi";
-import axios, { BaseUrl } from "../Api/axios";
-import Button from "./Button";
+import axios, { BaseUrl } from "../../Api/axios";
+import Button from "../Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MutatingDots } from "react-loader-spinner";
 
-const AgentForm = ({ Close }) => {
+const AssignTicket = ({ CloseModal }) => {
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -123,11 +123,11 @@ const AgentForm = ({ Close }) => {
             color="red"
             size={20}
             className="absolute right-3 top-2 cursor-pointer"
-            onClick={Close}
+            onClick={CloseModal}
           />
           {/* {success ? } */}
           <h1 className="text-[20px] font-[600] text-center pt-10 pb-10">
-            Create Agent
+            Assign TIcket
           </h1>
           <section className="flex justify-center items-center gap-4 pb-5">
             {/* First Name  */}
@@ -151,89 +151,6 @@ const AgentForm = ({ Close }) => {
               />
             </div>
             {/* Last Name  */}
-            <div>
-              <label
-                className="flex flex-col text-[10px] font-[500] pb-1"
-                htmlFor="last name"
-              >
-                Last Name
-              </label>
-              <input
-                className="flex flex-col w-[144px] h-[40px] border-[#C9C9C9] border-[1px] border-solid rounded-[5px] pl-2 outline-none text-[14px] font-[400]"
-                type="text"
-                name="first name"
-                id="first name"
-                onChange={(e) => {
-                  setLastName(e.target.value);
-                }}
-                value={lastname}
-                placeholder="Last Name"
-              />
-            </div>
-          </section>
-          {/* Password  */}
-          <section className="flex justify-center items-center gap-4 pb-5">
-            <div>
-              <label
-                className="flex flex-col text-[10px] font-[500] pb-1"
-                htmlFor="password"
-              >
-                Password
-              </label>
-              <input
-                className="flex flex-col w-[144px] h-[40px] border-[#C9C9C9] border-[1px] border-solid rounded-[5px] pl-2 outline-none text-[14px] font-[400]"
-                type="text"
-                name="password"
-                id="password"
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-                value={password}
-                placeholder="Password"
-              />
-            </div>
-            {/* Role  */}
-            <div>
-              <label
-                className="flex flex-col text-[10px] font-[500] pb-1"
-                htmlFor="Role"
-              >
-                Role
-              </label>
-              <input
-                className="flex flex-col w-[144px] h-[40px] border-[#C9C9C9] border-[1px] border-solid rounded-[5px] pl-2 outline-none text-[14px] font-[400]"
-                type="text"
-                name="role"
-                id="role"
-                onChange={(e) => {
-                  setRole(e.target.value);
-                }}
-                value={role}
-                placeholder="Role
-                        "
-              />
-            </div>
-          </section>
-          <section className="flex justify-center itens-center pb-5">
-            <div>
-              <label
-                className="flex flex-col text-[10px] font-[500] pb-1"
-                htmlFor="email address"
-              >
-                Email Address
-              </label>
-              <input
-                className="flex flex-col w-[304px] h-[40px] border-[#C9C9C9] border-[1px] border-solid rounded-[5px] pl-2 outline-none text-[14px] font-[400]"
-                type="email"
-                name="email address"
-                id="email address"
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-                value={email}
-                placeholder="Email Address"
-              />
-            </div>
           </section>
           <section className="flex justify-center items-center">
             <Button
@@ -260,4 +177,4 @@ const AgentForm = ({ Close }) => {
   );
 };
 
-export default AgentForm;
+export default AssignTicket;
