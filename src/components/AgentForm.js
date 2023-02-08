@@ -22,7 +22,7 @@ const AgentForm = ({ Close }) => {
     var data = { firstname, lastname, email, role, password };
     var config = {
       method: "POST",
-      url: `${BaseUrl}/createAgent`,
+      url: `${BaseUrl}/agents`,
       headers: {},
       data: data,
     };
@@ -48,9 +48,8 @@ const AgentForm = ({ Close }) => {
         setRole("");
       })
       .catch((err) => {
-        const { message } = err.response.data;
-        const msg = message[0].message;
-        console.log(msg);
+        setLoading(false);
+        console.log(err.message);
         if (!err?.response) {
           toast.error("No server response", {
             position: "top-right",

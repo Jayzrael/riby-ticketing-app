@@ -11,7 +11,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios, { BaseUrl } from "../Api/axios";
 
-const CrmComp = ({ currentItem }) => {
+const CrmComp = () => {
   const [agentData, setAgentData] = useState([]);
 
   useEffect(() => {
@@ -46,12 +46,15 @@ const CrmComp = ({ currentItem }) => {
           </TableHead>
           <TableBody>
             {agentData.map((data) => (
-              <TableRow key={data.name}>
-                <TableCell>{data.name}</TableCell>
-                <TableCell>{data.calories}</TableCell>
-                <TableCell>{data.fat}</TableCell>
-                <TableCell>{data.carbs}</TableCell>
-                <TableCell>{data.protein}</TableCell>
+              <TableRow key={data.firstname}>
+                <TableCell>
+                  {data.firstname}
+                  {data.lastname}
+                </TableCell>
+                <TableCell>{data.email}</TableCell>
+                <TableCell>8 Feb 2022</TableCell>
+                <TableCell>456</TableCell>
+                <TableCell>active</TableCell>
               </TableRow>
             ))}
           </TableBody>
