@@ -5,33 +5,50 @@ import Button from "./Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MutatingDots } from "react-loader-spinner";
+import { useNavigate } from "react-router-dom";
 
-const AgentForm = ({ Close }) => {
+const EditMod = ({ closeEditMod, Data }) => {
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");
+
   const [loading, setLoading] = useState(false);
 
-  const create = (e) => {
-    e.preventDefault();
-    setLoading(true);
-    console.log(loading);
+  const [id, setID] = useState(null);
 
-    var data = { firstname, lastname, email, role, password };
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setID(localStorage.getItem("ID"));
+    setFirstName(localStorage.getItem("firstname"));
+    setLastName(localStorage.getItem("lastname"));
+    setEmail(localStorage.getItem("email"));
+  }, []);
+
+  function updateAgent(e) {
+    e.preventDefault();
+
+    setLoading(true);
+
+    var data = {
+      firstname,
+      lastname,
+      email,
+    };
+
     var config = {
-      method: "POST",
-      url: `${BaseUrl}/agents`,
+      method: "patch",
+      maxBodyLength: Infinity,
+      url: `https://dev-apis.riby.ng/cus/api/v1/agents/${id}`,
       headers: {},
       data: data,
     };
 
     axios(config)
-      .then((result) => {
-        console.log(JSON.stringify(result.data));
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
         setLoading(false);
-        toast.success("Agent Created Successfully!", {
+        toast.success("Agent Updated Successfully!", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -41,11 +58,7 @@ const AgentForm = ({ Close }) => {
           progress: undefined,
           theme: "colored",
         });
-        setEmail("");
-        setFirstName("");
-        setLastName("");
-        setPassword("");
-        setRole("");
+        // navigate("/agents");
       })
       .catch((err) => {
         setLoading(false);
@@ -97,7 +110,7 @@ const AgentForm = ({ Close }) => {
         }
         setLoading(false);
       });
-  };
+  }
 
   return (
     <>
@@ -123,16 +136,16 @@ const AgentForm = ({ Close }) => {
             : "fixed bg-black bg-opacity-[0.7] w-screen h-screen z-10"
         }
       >
-        <div className="fixed w-[352px] h-[430px] bg-white rounded-[10px] top-[20%] left-[40%]">
+        <div className="fixed w-[352px] h-[350px] bg-white rounded-[10px] top-[20%] left-[40%]">
           <GiCancel
             color="red"
             size={20}
             className="absolute right-3 top-2 cursor-pointer"
-            onClick={Close}
+            onClick={closeEditMod}
           />
           {/* {success ? } */}
           <h1 className="text-[20px] font-[600] text-center pt-10 pb-10">
-            Create Agent
+            Update Agent
           </h1>
           <section className="flex justify-center items-center gap-4 pb-5">
             {/* First Name  */}
@@ -176,49 +189,6 @@ const AgentForm = ({ Close }) => {
               />
             </div>
           </section>
-          {/* Password  */}
-          <section className="flex justify-center items-center gap-4 pb-5">
-            <div>
-              <label
-                className="flex flex-col text-[10px] font-[500] pb-1"
-                htmlFor="password"
-              >
-                Password
-              </label>
-              <input
-                className="flex flex-col w-[144px] h-[40px] border-[#C9C9C9] border-[1px] border-solid rounded-[5px] pl-2 outline-none text-[14px] font-[400]"
-                type="text"
-                name="password"
-                id="password"
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-                value={password}
-                placeholder="Password"
-              />
-            </div>
-            {/* Role  */}
-            <div>
-              <label
-                className="flex flex-col text-[10px] font-[500] pb-1"
-                htmlFor="Role"
-              >
-                Role
-              </label>
-              <input
-                className="flex flex-col w-[144px] h-[40px] border-[#C9C9C9] border-[1px] border-solid rounded-[5px] pl-2 outline-none text-[14px] font-[400]"
-                type="text"
-                name="role"
-                id="role"
-                onChange={(e) => {
-                  setRole(e.target.value);
-                }}
-                value={role}
-                placeholder="Role
-                        "
-              />
-            </div>
-          </section>
           <section className="flex justify-center itens-center pb-5">
             <div>
               <label
@@ -242,9 +212,9 @@ const AgentForm = ({ Close }) => {
           </section>
           <section className="flex justify-center items-center">
             <Button
-              ButtonText="Create"
+              ButtonText="Update"
               ClassName="bg-[#EE095B] w-[304px] h-[40px] text-white rounded-[5px] text-[14px] font-[600]"
-              HandleOpen={create}
+              HandleOpen={updateAgent}
             />
           </section>
         </div>
@@ -265,4 +235,4 @@ const AgentForm = ({ Close }) => {
   );
 };
 
-export default AgentForm;
+export default EditMod;

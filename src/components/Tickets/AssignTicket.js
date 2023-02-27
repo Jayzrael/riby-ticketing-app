@@ -6,119 +6,53 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MutatingDots } from "react-loader-spinner";
 
-const AssignTicket = ({ CloseModal }) => {
-  const [firstname, setFirstName] = useState("");
-  const [lastname, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");
-  const [loading, setLoading] = useState(false);
+const AssignTicket = ({ CloseModal, viewDetails }) => {
+  const [selectAgent, setSelectAgent] = useState([]);
+  const [agent, setAgent] = useState("");
 
-  const create = (e) => {
-    e.preventDefault();
-    setLoading(true);
-    console.log(loading);
-
-    var data = { firstname, lastname, email, role, password };
+  useEffect(() => {
     var config = {
-      method: "POST",
-      url: `${BaseUrl}/createAgent`,
+      method: "get",
+      url: `${BaseUrl}/agents`,
+      headers: {},
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(response.data.agents);
+        setSelectAgent(response.data.agents);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
+
+  console.log(agent);
+  console.log("this is viewDetails", viewDetails);
+
+  const assign = (id) => {
+    var data = { ticketId: viewDetails.id, agentId: `${id}` };
+
+    var config = {
+      method: "patch",
+      url: "https://dev-apis.riby.ng/cus/api/v1/tickets/assign",
       headers: {},
       data: data,
     };
 
     axios(config)
-      .then((result) => {
-        console.log(JSON.stringify(result.data));
-        setLoading(false);
-        toast.success("Agent Created Successfully!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-        setEmail("");
-        setFirstName("");
-        setLastName("");
-        setPassword("");
-        setRole("");
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
       })
-      .catch((err) => {
-        const { message } = err.response.data;
-        const msg = message[0].message;
-        console.log(msg);
-        if (!err?.response) {
-          toast.error("No server response", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-        } else if (err.response?.status === 400) {
-          toast.error("invalid email or password", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-        } else if (err.response?.status === 401) {
-          toast.error("Unauthorized", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-        } else {
-          toast.error("Login failed", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-        }
-        setLoading(false);
+      .catch(function (error) {
+        console.log(error);
       });
   };
 
   return (
     <>
-      {loading && (
-        <div className="fixed flex justify-center items-center w-full h-full bg-[#0D233D] bg-opacity-[0.7] z-10 inset-0">
-          <MutatingDots
-            height="100"
-            width="100"
-            color="#EE095B"
-            secondaryColor="#EE095B"
-            radius="12.5"
-            ariaLabel="mutating-dots-loading"
-            wrapperStyle={{}}
-            wrapperClass=""
-            visible={true}
-          />
-        </div>
-      )}
       <div className="fixed bg-black bg-opacity-[0.7] w-screen h-screen">
-        <div className="fixed w-[352px] h-[430px] bg-white rounded-[10px] top-[20%] left-[40%]">
+        <div className="fixed w-[352px] h-[240px] bg-white rounded-[10px] top-[30%] left-[40%]">
           <GiCancel
             color="red"
             size={20}
@@ -126,52 +60,43 @@ const AssignTicket = ({ CloseModal }) => {
             onClick={CloseModal}
           />
           {/* {success ? } */}
-          <h1 className="text-[20px] font-[600] text-center pt-10 pb-10">
+          <h1 className="text-[20px] font-[600] text-center pt-10 pb-5">
             Assign TIcket
           </h1>
-          <section className="flex justify-center items-center gap-4 pb-5">
-            {/* First Name  */}
+          <section className="flex justify-center items-center pb-5">
             <div>
               <label
                 className="flex flex-col text-[10px] font-[500] pb-1"
-                htmlFor="first name"
+                htmlFor="agent"
               >
-                First Name
+                Agent
               </label>
-              <input
-                className="flex flex-col w-[144px] h-[40px] border-[#C9C9C9] border-[1px] border-solid rounded-[5px] pl-2 outline-none text-[14px] font-[400]"
-                type="text"
-                name="first name"
-                id="first name"
+              <select
+                className="flex flex-col w-[304px] h-[40px] border-[#C9C9C9] border-[1px] border-solid rounded-[5px] pl-2 pt-2 outline-none text-[14px] font-[400]"
+                name="agent"
+                id="agent"
+                value={agent}
                 onChange={(e) => {
-                  setFirstName(e.target.value);
+                  setAgent(e.target.value);
                 }}
-                value={firstname}
-                placeholder="First Name"
-              />
+              >
+                <option value="Select Agent">Select Agent</option>
+                {selectAgent?.map((agent) => (
+                  <option value={agent.id}>
+                    {agent.firstname + " " + agent.lastname}
+                  </option>
+                ))}
+              </select>
             </div>
-            {/* Last Name  */}
           </section>
           <section className="flex justify-center items-center">
             <Button
-              ButtonText="Create"
+              ButtonText="Assign"
               ClassName="bg-[#EE095B] w-[304px] h-[40px] text-white rounded-[5px] text-[14px] font-[600]"
-              HandleOpen={create}
+              HandleOpen={() => assign(agent)}
             />
           </section>
         </div>
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-        />
       </div>
     </>
   );

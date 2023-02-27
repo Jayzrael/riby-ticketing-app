@@ -6,8 +6,9 @@ import ResetPwdModal from "../../components/ResetPwdModal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MutatingDots } from "react-loader-spinner";
+import { useSignIn } from "react-auth-kit";
 
-const AgentLogin = () => {
+const QaLogin = () => {
   const Navigate = useNavigate();
 
   const errRef = useRef();
@@ -17,6 +18,8 @@ const AgentLogin = () => {
   const [errMsg, setErrMsg] = useState("");
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const signIn = useSignIn();
 
   const handleClose = () => {
     setShow(false);
@@ -46,6 +49,18 @@ const AgentLogin = () => {
     axios(config)
       .then((res) => {
         console.log(JSON.stringify(res.data.user));
+
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+
+        localStorage.setItem("token", JSON.stringify(res.data.token));
+
+        signIn({
+          token: res.data.token,
+          expiresIn: "3600",
+          tokenType: "Bearer",
+          authState: { email: data.email },
+        });
+
         setEmail("");
         setPassword("");
         setLoading(false);
@@ -102,6 +117,8 @@ const AgentLogin = () => {
         }
       });
   };
+
+  // console.log("logged in as:", user);
 
   return (
     <>
@@ -203,4 +220,4 @@ const AgentLogin = () => {
   );
 };
 
-export default AgentLogin;
+export default QaLogin;

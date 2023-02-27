@@ -1,73 +1,73 @@
+import { Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 // import { Link } from "react-router-dom";
 import axios, { BaseUrl } from "../../Api/axios";
 import dots from "../../assets/dots.png";
+import TicketDetails from "./TicketDetails";
 
 const Ticket = ({
   ticket,
   TicketTime,
-  HandleOnChange,
-  IsChecked,
-  OpenModal,
+  HandleOpenModal,
+  CloseTicket,
+  DeleteTicket,
+  ViewTicketDetail,
+  TicketPage,
 }) => {
   const [drop, setDrop] = useState(false);
+  // const [viewDetails, setViewDetails] = useState({});
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleDrop = () => {
-    setDrop(!drop);
+  const [isChecked, setIsChecked] = useState(false);
+
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
-  // const CloseTicket = () => {
-  //   var data = { ticketId: "63d23c459ec6d43b065101e7" };
+  const handleOnChange = (tickets) => {
+    console.log("this is ticket", tickets);
+    console.log("this is ticket id", tickets.id);
+    setIsChecked(!isChecked);
+  };
 
-  //   var config = {
-  //     method: "patch",
-  //     url: `${BaseUrl}/tickets/close`,
-  //     headers: {},
-  //     data: data,
-  //   };
+  const Navigate = useNavigate();
 
-  //   axios(config)
-  //     .then(function (response) {
-  //       console.log(JSON.stringify(response.data));
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
+  // const viewOneUser = () => {
+  //   console.log(ticket);
+  //   setViewDetails(ticket);
   // };
 
-  // const DeleteTicket = () => {
-  //   var config = {
-  //     method: "delete",
-  //     url: `${BaseUrl}/tickets/63e0a6d01880276437b57db2`,
-  //     headers: {},
-  //   };
-
-  //   axios(config)
-  //     .then(function (response) {
-  //       console.log(JSON.stringify(response.data));
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  // };
+  // console.log("ticketState", viewDetails);
 
   return (
     <div>
-      <section className="bg-white mt-3 min-w-[976px] w-full flex justify-between p-3 rounded-[10px]">
+      <section
+        className="bg-white mt-3 min-w-[976px] w-full flex justify-between p-3 rounded-[10px]"
+        // onClick={() => Navigate("/ticketDetails")}
+      >
         <div className="flex gap-4">
           <input
             type="checkbox"
-            checked={IsChecked}
-            onChange={HandleOnChange}
+            checked={isChecked}
+            onChange={handleOnChange}
             className="accent-[#EE095B]"
             name=""
             id=""
+            onClick={ViewTicketDetail}
           />
           <div>
-            <h2 className="text-black font-[600]">{ticket.title}</h2>
+            <h2 className="text-black font-[600]">
+              <Link to={TicketPage}>{ticket.title}</Link>
+            </h2>
             <div className="flex justify-center items-center gap-2">
               <h4 className="text-[10px] text-[#EE095B] font-bold">
-                {ticket.description}
+                {ticket.reason}
               </h4>{" "}
               <span className="text-[10px] text-[#BFBEC2]">{TicketTime}</span>{" "}
             </div>
@@ -76,29 +76,50 @@ const Ticket = ({
         <div className="flex justify-center items-center gap-4">
           <h2>{ticket.status}</h2>
           <button type="button">
-            <img src={dots} alt="" onClick={handleDrop} />
+            <img
+              src={dots}
+              alt=""
+              id="basic-button"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+            />
           </button>
-          {drop && (
-            <div class="absolute right-0 z-10 p-2 w-[100px] min-h-[96px] rounded-[10px] box-border mt-[130px]  origin-top-right bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-              <div className="flex flex-col justify-start gap-3 pt-2">
-                <h4 className="text-[12px] cursor-pointer" onClick={OpenModal}>
-                  Assign ticket
-                </h4>
-                <h5
-                  className="text-[12px] cursor-pointer"
-                  // onClick={CloseTicket}
-                >
-                  Close ticket
-                </h5>
-                <h5
-                  className="text-red-700 w-full text-[12px] font-[400] cursor-pointer"
-                  // onClick={DeleteTicket}
-                >
-                  Delete ticket
-                </h5>
-              </div>
-            </div>
-          )}
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            <MenuItem
+              onClick={() => {
+                handleClose();
+                HandleOpenModal();
+              }}
+            >
+              Assign Ticket
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                handleClose();
+                CloseTicket();
+              }}
+            >
+              Close Ticket
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                handleClose();
+                DeleteTicket();
+              }}
+            >
+              Delete Ticket
+            </MenuItem>
+          </Menu>
         </div>
       </section>
     </div>

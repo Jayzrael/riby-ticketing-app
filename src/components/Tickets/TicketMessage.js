@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Dots from "../../assets/dots.png";
 
-const TicketMessage = () => {
+const TicketMessage = ({ ticketDetails }) => {
   const [drop, setDrop] = useState(false);
 
   const handleDrop = () => {
@@ -12,7 +12,7 @@ const TicketMessage = () => {
   return (
     <div className="bg-white mt-7 min-w-[97.6vh] min-h-[90vh] rounded-[10px]">
       <div className="flex justify-between items-center bg-white p-5 rounded-[10px]">
-        <span>#456 No Loan Records </span>
+        <span>{ticketDetails?.title} </span>
         <img
           className="relative cursor-pointer"
           src={Dots}

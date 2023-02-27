@@ -3,31 +3,39 @@ import Inbox from "../assets/minbox.png";
 import Notification from "../assets/mbell.png";
 import Profile from "../assets/profile.png";
 import ArrowDown from "../assets/arrowdown.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios, { BaseUrl } from "../Api/axios";
+import { useSignOut } from "react-auth-kit";
+import { Avatar, styled } from "@mui/material";
+
+const StyledAvatar = styled(Avatar)(({ theme }) => ({
+  backgroundColor: theme.palette.secondary.dark,
+  color: theme.palette.common.white,
+}));
 
 const Navbar = () => {
   const [drop, setDrop] = useState(false);
+
+  const whoIs = localStorage.getItem("user");
+  const appUser = JSON.parse(whoIs);
 
   const handleMenu = () => {
     setDrop(!drop);
   };
 
-  const signOut = () => {
-    var config = {
-      method: "get",
-      url: `${BaseUrl}/logout`,
-      headers: {},
-    };
+  const logOut = useSignOut();
 
-    axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  const Navigate = useNavigate();
+
+  const signOut1 = () => {
+    logOut();
+    Navigate("/");
+  };
+
+  const signOut2 = () => {
+    logOut();
+    Navigate("/agentLogin");
   };
 
   return (
@@ -41,7 +49,7 @@ const Navbar = () => {
         </div>
         <div className="cursor-pointer">
           <Link to="">
-            <img src={Profile} alt="" />
+            <StyledAvatar alt={appUser._doc.firstname} src="." />
           </Link>
         </div>
         <div className="relative pr-10 cursor-pointer" onClick={handleMenu}>
@@ -56,8 +64,8 @@ const Navbar = () => {
                   Profile
                 </Link>
                 <a
-                  className="text-red-700 w-full text-[12px] font-[400]"
-                  onClick={signOut}
+                  className="text-red-700 w-full text-[12px] font-[400] cursor-pointer"
+                  onClick={appUser._doc.role == "admin" ? signOut1 : signOut2}
                 >
                   Sign out
                 </a>
