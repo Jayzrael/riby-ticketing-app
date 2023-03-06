@@ -9,6 +9,8 @@ import deleteTicket from "../assets/deleteticket.png";
 import Ticket from "../components/Tickets/Ticket";
 import dots from "../assets/dots.png";
 import AssignTicket from "../components/Tickets/AssignTicket";
+import ViewTicket from "../components/Tickets/ViewTicket";
+import EditTicket from "../components/Tickets/EditTicket";
 
 const Home = () => {
   const [ticketData, setTicketData] = useState([]);
@@ -17,6 +19,16 @@ const Home = () => {
   const [totalTickets, setTotalTickets] = useState(0);
   const [viewDetails, setViewDetails] = useState({});
   const [showCheckcomp, setShowCheckcomp] = useState(false);
+  const [viewTicketMod, setViewTicketMod] = useState(false);
+  // const [viewEditTicket, setViewEditTicket] = useState(false);
+
+  // const editTicketMod = () => {
+  //   setViewEditTicket(true);
+  // };
+
+  // const closeEditTicket = () => {
+  //   setViewEditTicket(false);
+  // };
 
   const handleOpenModal = () => {
     setOpenModal(!openModal);
@@ -103,12 +115,14 @@ const Home = () => {
           viewDetails={viewDetails}
           CloseModal={CloseModal}
           Open={openModal}
+          getData={getData}
         />
       )}
+      {/* {viewEditTicket && <EditTicket closeEditTicket={closeEditTicket} />} */}
       <Sidebar />
       <div className="w-full h-full">
         <Navbar />
-        <div className="bg-slate-100 w-full h-screen p-8">
+        <div className="bg-slate-100 w-full h-full p-8">
           <section className="flex justify-between">
             <h1 className="text-2xl font-bold">Tickets</h1>
             <div className="flex gap-8">
@@ -148,12 +162,7 @@ const Home = () => {
                 <option value="All tickets (24)">
                   All tickets ({totalTickets})
                 </option>
-                <option
-                  value="opened tickets"
-                  // onClick={() => openedTickets()}
-                >
-                  Opened Tickets
-                </option>
+                <option value="opened tickets">Opened Tickets</option>
                 <option value="closed tickets">Closed Tickets</option>
               </select>
             </div>
@@ -178,8 +187,7 @@ const Home = () => {
                   ticket={tickets}
                   TicketTime=""
                   ViewTicketDetail={() => viewOneUser(tickets)}
-                  // HandleOnChange={() => handleOnChange(tickets)}
-                  // IsChecked={isChecked}
+                  // EditTicketMod={editTicketMod}
                   HandleOpenModal={handleOpenModal}
                   CloseTicket={() => closeTicket(tickets.id)}
                   DeleteTicket={() => deleteTicketHandle(tickets.id)}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import axios, { BaseUrl } from "../../Api/axios";
+import axios, { BaseUrl, PlainReq } from "../../Api/axios";
 import Riby from "../../assets/riby-logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import ResetPwdModal from "../../components/ResetPwdModal";
@@ -46,7 +46,7 @@ const QaLogin = () => {
       data: data,
     };
 
-    axios(config)
+    PlainReq(config)
       .then((res) => {
         console.log(JSON.stringify(res.data.user));
 
@@ -60,6 +60,8 @@ const QaLogin = () => {
           tokenType: "Bearer",
           authState: { email: data.email },
         });
+
+        console.log(res.request);
 
         setEmail("");
         setPassword("");

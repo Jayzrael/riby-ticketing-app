@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MutatingDots } from "react-loader-spinner";
 
-const AgentForm = ({ Close }) => {
+const AgentForm = ({ handleClose, getAgents }) => {
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -17,7 +17,6 @@ const AgentForm = ({ Close }) => {
   const create = (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log(loading);
 
     var data = { firstname, lastname, email, role, password };
     var config = {
@@ -46,6 +45,10 @@ const AgentForm = ({ Close }) => {
         setLastName("");
         setPassword("");
         setRole("");
+        getAgents();
+        setTimeout(() => {
+          handleClose();
+        }, 1000);
       })
       .catch((err) => {
         setLoading(false);
@@ -128,7 +131,7 @@ const AgentForm = ({ Close }) => {
             color="red"
             size={20}
             className="absolute right-3 top-2 cursor-pointer"
-            onClick={Close}
+            onClick={handleClose}
           />
           {/* {success ? } */}
           <h1 className="text-[20px] font-[600] text-center pt-10 pb-10">

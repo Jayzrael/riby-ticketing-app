@@ -20,6 +20,7 @@ import {
   TableFooter,
   Typography,
 } from "@mui/material";
+import TicketMenu2 from "./MenuItem/TicketMenu2";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -46,11 +47,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const CrmTable = () => {
-  const [ticketData, setTicketData] = useState([]);
+const CrmTable = ({ ticketData, Search }) => {
+  // const [ticketData, setTicketData] = useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [drop, setDrop] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleMenu = () => {
     setDrop(!drop);
@@ -64,28 +66,36 @@ const CrmTable = () => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   // const classes = useStyle();
 
-  useEffect(() => {
-    getData();
-  }, []);
+  // useEffect(() => {
+  //   getData();
+  // }, []);
 
-  const getData = () => {
-    var config = {
-      method: "get",
-      url: `${BaseUrl}/tickets`,
-      headers: {},
-    };
+  // const getData = () => {
+  //   var config = {
+  //     method: "get",
+  //     url: `${BaseUrl}/tickets`,
+  //     headers: {},
+  //   };
 
-    axios(config)
-      .then((res) => {
-        console.log(res.data.tickets);
-        setTicketData(res.data.tickets);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  //   axios(config)
+  //     .then((res) => {
+  //       console.log(res.data.tickets);
+  //       setTicketData(res.data.tickets);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
   return (
     <div>
       <TableContainer component={Paper}>
@@ -102,6 +112,11 @@ const CrmTable = () => {
           </TableHead>
           <TableBody>
             {ticketData
+              .filter((item) => {
+                return Search.toLowerCase() === ""
+                  ? item
+                  : item.firstName.toLowerCase().includes(Search);
+              })
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((data) => (
                 <StyledTableRow key={data.id}>
@@ -125,14 +140,20 @@ const CrmTable = () => {
                   <StyledTableCell>{data.productCategory}</StyledTableCell>
                   <StyledTableCell>
                     {" "}
-                    <img
-                      src=""
+                    {/* <img
+                      src={Dots}
                       className="cursor-pointer"
                       alt=""
-                      onClick={() => {
-                        handleMenu();
-                      }}
+                      onClick={handleClick}
                     />{" "}
+                    <TicketMenu2
+                      anchorEl={anchorEl}
+                      open={open}
+                      handleClose={handleClose}
+                      // HandleTicketMod={HandleTicketMod}
+                      // EditTicketMod={EditTicketMod}
+                      TicketPage={`/ticketDetails/${data.id}`} */}
+                    {/* /> */}
                     {/* {drop && (
                       <div class="absolute right-0 z-10 p-3 w-[120px] h-[110px] rounded-[10px] box-border mt-8  origin-top-right bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div

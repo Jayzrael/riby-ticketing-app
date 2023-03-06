@@ -80,6 +80,9 @@ export default function CustomerFormPage({ Open, HandleClose }) {
         setPhone("");
         setReason("");
         setTicketTitle("");
+        setTimeout(() => {
+          HandleClose();
+        }, 1000);
       })
       .catch((err) => {
         setLoading(false);
@@ -355,54 +358,6 @@ export default function CustomerFormPage({ Open, HandleClose }) {
           theme="colored"
         />
       </div>
-
-      {/* {loading && (
-        <div className="fixed flex justify-center items-center w-full h-full bg-[#0D233D] bg-opacity-[0.7] z-10">
-          <MutatingDots
-            height="100"
-            width="100"
-            color="#EE095B"
-            secondaryColor="#EE095B"
-            radius="12.5"
-            ariaLabel="mutating-dots-loading"
-            wrapperStyle={{}}
-            wrapperClass=""
-            visible={true}
-          />
-        </div>
-      )} */}
     </>
   );
 }
-
-// import React, { useEffect, useRef, useState } from "react";
-// import { GiCancel } from "react-icons/gi";
-// import axios, { BaseUrl } from "../Api/axios";
-// import Button from "./Button";
-// import { ToastContainer, toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
-// import { MutatingDots } from "react-loader-spinner";
-
-// const AgentForm = ({ Close }) => {
-//
-
-// //   return (
-//     <>
-
-//         <div className="fixed min-w-[352px] h-[750px] max-h-[100vh] overflow-y-auto bg-white rounded-[10px] top-4 left-[40%]">
-//           <GiCancel
-//             color="red"
-//             size={20}
-//             className="absolute right-3 top-2 cursor-pointer"
-//             onClick={Close}
-//           />
-//           {/* {success ? } */}
-
-//     </div>
-//
-//   </div>
-// </>
-//   );
-// };
-
-// export default AgentForm;

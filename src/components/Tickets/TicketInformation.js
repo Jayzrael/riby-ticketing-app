@@ -1,6 +1,5 @@
 import { Avatar, styled } from "@mui/material";
 import React from "react";
-import axios from "../../Api/axios";
 
 const StyledAvatar = styled(Avatar)(({ theme }) => ({
   backgroundColor: theme.palette.secondary.dark,
@@ -8,22 +7,6 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
 }));
 
 const TicketInformation = ({ ticketDetails }) => {
-  function openTicket() {
-    var config = {
-      method: "get",
-      url: "https://dev-apis.riby.ng/cus/api/v1/tickets/open",
-      headers: {},
-    };
-
-    axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
-
   return (
     <div className="flex flex-col gap-9 p-5 bg-white w-full min-w-[97.6vh] min-h-[20vh] rounded-[10px] mt-8">
       {/* Name section */}
@@ -48,11 +31,8 @@ const TicketInformation = ({ ticketDetails }) => {
         </div>
         {/* button  */}
         <div>
-          <button
-            className="bg-[#C9C9C9] w-[58px] h-[26px] rounded-[5px] text-[12px] font-[500]"
-            onClick={() => openTicket()}
-          >
-            Open
+          <button className="bg-[#C9C9C9] w-[58px] h-[26px] rounded-[5px] text-[12px] font-[500]">
+            {ticketDetails?.status}
           </button>
         </div>
       </section>

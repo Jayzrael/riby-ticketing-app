@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { MutatingDots } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 
-const EditMod = ({ closeEditMod, Data }) => {
+const EditMod = ({ closeEditMod, getAgents }) => {
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -15,8 +15,6 @@ const EditMod = ({ closeEditMod, Data }) => {
   const [loading, setLoading] = useState(false);
 
   const [id, setID] = useState(null);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     setID(localStorage.getItem("ID"));
@@ -58,7 +56,10 @@ const EditMod = ({ closeEditMod, Data }) => {
           progress: undefined,
           theme: "colored",
         });
-        // navigate("/agents");
+        setTimeout(() => {
+          closeEditMod();
+        }, 1000);
+        getAgents();
       })
       .catch((err) => {
         setLoading(false);

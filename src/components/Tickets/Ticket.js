@@ -1,10 +1,13 @@
-import { Menu, MenuItem } from "@mui/material";
+// import { Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // import { Link } from "react-router-dom";
 import axios, { BaseUrl } from "../../Api/axios";
 import dots from "../../assets/dots.png";
+import TicketMenu1 from "../MenuItem/TicketMenu1";
+import TicketMenu2 from "../MenuItem/TicketMenu2";
+import EditTicket from "./EditTicket";
 import TicketDetails from "./TicketDetails";
 
 const Ticket = ({
@@ -15,12 +18,23 @@ const Ticket = ({
   DeleteTicket,
   ViewTicketDetail,
   TicketPage,
+  // EditTicketMod,
+  HandleTicketMod,
 }) => {
   const [drop, setDrop] = useState(false);
   // const [viewDetails, setViewDetails] = useState({});
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const [isChecked, setIsChecked] = useState(false);
+  const [viewEditTicket, setViewEditTicket] = useState(false);
+
+  const closeEditTicket = () => {
+    setViewEditTicket(false);
+  };
+
+  const editTicketMod = () => {
+    setViewEditTicket(true);
+  };
 
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -36,17 +50,12 @@ const Ticket = ({
     setIsChecked(!isChecked);
   };
 
-  const Navigate = useNavigate();
-
-  // const viewOneUser = () => {
-  //   console.log(ticket);
-  //   setViewDetails(ticket);
-  // };
-
-  // console.log("ticketState", viewDetails);
+  const User = localStorage.getItem("user");
+  const appUser = JSON.parse(User);
 
   return (
     <div>
+      {viewEditTicket && <EditTicket closeEditTicket={closeEditTicket} />}
       <section
         className="bg-white mt-3 min-w-[976px] w-full flex justify-between p-3 rounded-[10px]"
         // onClick={() => Navigate("/ticketDetails")}
@@ -86,40 +95,25 @@ const Ticket = ({
               onClick={handleClick}
             />
           </button>
-          <Menu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            MenuListProps={{
-              "aria-labelledby": "basic-button",
-            }}
-          >
-            <MenuItem
-              onClick={() => {
-                handleClose();
-                HandleOpenModal();
-              }}
-            >
-              Assign Ticket
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                handleClose();
-                CloseTicket();
-              }}
-            >
-              Close Ticket
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                handleClose();
-                DeleteTicket();
-              }}
-            >
-              Delete Ticket
-            </MenuItem>
-          </Menu>
+          {appUser.role == "admin" ? (
+            <TicketMenu1
+              anchorEl={anchorEl}
+              open={open}
+              handleClose={handleClose}
+              HandleOpenModal={HandleOpenModal}
+              CloseTicket={CloseTicket}
+              DeleteTicket={DeleteTicket}
+            />
+          ) : (
+            <TicketMenu2
+              anchorEl={anchorEl}
+              open={open}
+              handleClose={handleClose}
+              HandleTicketMod={HandleTicketMod}
+              EditTicketMod={editTicketMod}
+              TicketPage={TicketPage}
+            />
+          )}
         </div>
       </section>
     </div>

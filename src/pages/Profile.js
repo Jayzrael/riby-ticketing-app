@@ -1,34 +1,29 @@
-import e from "cors";
-import React, { useContext } from "react";
-import { useEffect } from "react";
 import { useState } from "react";
 import { BsFillPersonFill } from "react-icons/bs";
 import axios, { BaseUrl } from "../Api/axios";
 import Button from "../components/Button";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
-import { UserContext } from "../contexts/UserContext";
 
 const Profile = () => {
-  const [firstName, setFirstName] = useState("");
-  const [email, setEmail] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
-  const userToken = localStorage.getItem("token");
-  const token = JSON.parse(userToken);
+  const token = localStorage.getItem("token");
 
   const updatePassword = () => {
     var data = { currentPassword, password: newPassword };
 
     var config = {
       method: "patch",
-      url: `${BaseUrl}/updatePassword`,
+      url: `${BaseUrl}updatePassword`,
       headers: {
-        Authorization: `Basic ${token}`,
+        "Content-Type": "application/json",
+        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZjRiMGMwYmZmMTY5MzQ5ZmJiZmViOSIsImVtYWlsIjoiaXNyYWVsLm9tb2xlQHJpYnkubWUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2Nzc3NTE2MTF9.gHWl03TdQ2p2X-hNWVnGgQ9u9VwsIUpIg6xRNxoM-M0`,
       },
       data: data,
     };
+    console.log("this token", token);
 
     axios(config)
       .then(function (response) {
@@ -71,7 +66,11 @@ const Profile = () => {
                     className="w-[176px] h-[40px] outline-none bg-white border-[1px] border-solid border-[#C9C9C9] rounded-[5px] pl-2"
                     type="text"
                     name="firstname"
-                    value={appUser._doc.firstname}
+                    value={
+                      appUser.role == "admin"
+                        ? appUser.firstName
+                        : appUser._doc.firstname
+                    }
                     readOnly
                     id="firstname"
                   />
@@ -87,7 +86,11 @@ const Profile = () => {
                     className="w-[176px] h-[40px] outline-none bg-white border-[1px] border-solid border-[#C9C9C9] rounded-[5px] pl-2"
                     type="text"
                     name="lastname"
-                    value={appUser._doc.lastname}
+                    value={
+                      appUser.role == "admin"
+                        ? appUser.lastName
+                        : appUser._doc.lastname
+                    }
                     readOnly
                     id="lastname"
                   />
@@ -106,7 +109,9 @@ const Profile = () => {
                   className="w-[368px] h-[40px] outline-none bg-white border-[1px] border-solid border-[#C9C9C9] rounded-[5px] pl-2"
                   type="text"
                   name="email"
-                  value={appUser._doc.email}
+                  value={
+                    appUser.role == "admin" ? appUser.email : appUser._doc.email
+                  }
                   readOnly
                   id="email"
                 />
@@ -123,7 +128,9 @@ const Profile = () => {
                 />
               </div>
               <h1 className="text-[18px] font-[600] text-[#0D233D]">
-                {appUser._doc.firstname + " " + appUser._doc.lastname}
+                {appUser.role == "admin"
+                  ? appUser.firstName + " " + appUser.lastName
+                  : appUser._doc.firstname + " " + appUser._doc.lastname}
               </h1>
 
               {/* <input type="file" name="Edit Photo" id="edit photo" /> */}

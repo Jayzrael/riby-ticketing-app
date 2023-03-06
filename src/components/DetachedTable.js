@@ -131,6 +131,7 @@ const DetachedTable = ({
               onClick={() => {
                 setDrop(false);
                 DeleteAgent(data.id);
+                console.log("delete data", data.id);
               }}
             >
               Delete Agent

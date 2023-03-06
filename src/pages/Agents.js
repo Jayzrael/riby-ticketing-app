@@ -30,7 +30,7 @@ const Agents = () => {
   };
 
   const handleModClose = () => {
-    setOpenMod(!openMod);
+    setOpenMod(false);
   };
 
   useEffect(() => {
@@ -71,8 +71,8 @@ const Agents = () => {
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-        var newAgents = agentData.filter((item) => item.id !== id);
-        setAgentData(newAgents);
+        // var newAgents = agentData.filter((item) => item.id !== id);
+        // setAgentData(newAgents);
         getAgents();
       })
       .catch(function (error) {
@@ -89,9 +89,21 @@ const Agents = () => {
 
   return (
     <div className="flex">
-      {editModal && <EditMod closeEditMod={closeEditMod} />}
+      {editModal && (
+        <EditMod
+          closeEditMod={closeEditMod}
+          getAgents={getAgents}
+          setOpenMod={setOpenMod}
+        />
+      )}
       {openMod && <AgentMod CloseMod={handleModClose} />}
-      {open && <AgentForm Close={handleClose} />}
+      {open && (
+        <AgentForm
+          handleClose={handleClose}
+          setOpen={setOpen}
+          getAgents={getAgents}
+        />
+      )}
       <Sidebar />
       <div className="w-full h-full">
         <Navbar />

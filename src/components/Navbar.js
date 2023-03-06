@@ -24,18 +24,42 @@ const Navbar = () => {
     setDrop(!drop);
   };
 
-  const logOut = useSignOut();
+  // const logOut = useSignOut();
 
   const Navigate = useNavigate();
 
   const signOut1 = () => {
-    logOut();
-    Navigate("/");
+    var config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: "logout",
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        Navigate("/");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   const signOut2 = () => {
-    logOut();
-    Navigate("/agentLogin");
+    var config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: "logout",
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        Navigate("/agentLogin");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   return (
@@ -49,7 +73,14 @@ const Navbar = () => {
         </div>
         <div className="cursor-pointer">
           <Link to="">
-            <StyledAvatar alt={appUser._doc.firstname} src="." />
+            <StyledAvatar
+              alt={
+                appUser.role == "admin"
+                  ? appUser.firstName
+                  : appUser._doc.firstname
+              }
+              src="."
+            />
           </Link>
         </div>
         <div className="relative pr-10 cursor-pointer" onClick={handleMenu}>
@@ -65,7 +96,7 @@ const Navbar = () => {
                 </Link>
                 <a
                   className="text-red-700 w-full text-[12px] font-[400] cursor-pointer"
-                  onClick={appUser._doc.role == "admin" ? signOut1 : signOut2}
+                  onClick={appUser.role == "admin" ? signOut1 : signOut2}
                 >
                   Sign out
                 </a>

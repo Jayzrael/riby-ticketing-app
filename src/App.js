@@ -12,7 +12,6 @@ import { SkeletonTheme } from "react-loading-skeleton";
 import { AuthProvider, RequireAuth } from "react-auth-kit";
 import QaLogin from "./pages/Login";
 import AgentLogin from "./pages/Login/AgentLogin";
-import AgentMod from "./components/AgentMod";
 
 function App() {
   return (

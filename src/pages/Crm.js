@@ -6,6 +6,9 @@ import { BsCircle } from "react-icons/bs";
 // import Dots from "../assets/dots.png";
 import CustomerFormPage from "../components/CustomerFormPage";
 import CrmTable from "../components/CrmTable";
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import axios, { BaseUrl } from "../Api/axios";
 
 const style = {
   position: "absolute",
@@ -24,9 +27,32 @@ const Crm = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [drop, setDrop] = useState(false);
+  const [ticketData, setTicketData] = useState([]);
+  const [search, setSearch] = useState("");
 
   const handleMenu = () => {
     setDrop(!drop);
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = () => {
+    var config = {
+      method: "get",
+      url: `${BaseUrl}/tickets`,
+      headers: {},
+    };
+
+    axios(config)
+      .then((res) => {
+        console.log(res.data.tickets);
+        setTicketData(res.data.tickets);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -51,6 +77,8 @@ const Crm = () => {
                   type="search"
                   name=""
                   id=""
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
                   placeholder="Search for agents"
                 />
               </div>
@@ -66,7 +94,11 @@ const Crm = () => {
 
           {/* Agents 0.5px solid #D9D8DA*/}
           <div className="mt-16 ">
-            <CrmTable />
+            <CrmTable
+              Search={search}
+              ticketData={ticketData}
+              TicketPage="/ticketDetails"
+            />
           </div>
         </section>
       </div>
