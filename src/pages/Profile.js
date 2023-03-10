@@ -88,7 +88,7 @@ const Profile = () => {
       url: `${BaseUrl}updatePassword`,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer token`,
+        Authorization: `Bearer ${token}`,
       },
       data: data,
     };

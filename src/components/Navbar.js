@@ -24,42 +24,47 @@ const Navbar = () => {
     setDrop(!drop);
   };
 
-  // const logOut = useSignOut();
+  const logOut = useSignOut();
 
   const Navigate = useNavigate();
 
   const signOut1 = () => {
-    var config = {
-      method: "get",
-      maxBodyLength: Infinity,
-      url: "logout",
-    };
+    logOut();
+    Navigate("/");
+    // var config = {
+    //   method: "get",
+    //   maxBodyLength: Infinity,
+    //   url: "logout",
+    // };
 
-    axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-        Navigate("/");
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    // axios(config)
+    //   .then(function (response) {
+    //     console.log(JSON.stringify(response.data));
+    //     Navigate("/");
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
   };
 
   const signOut2 = () => {
-    var config = {
-      method: "get",
-      maxBodyLength: Infinity,
-      url: "logout",
-    };
+    logOut();
+    Navigate("/agentLogin");
 
-    axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-        Navigate("/agentLogin");
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    // var config = {
+    //   method: "get",
+    //   maxBodyLength: Infinity,
+    //   url: "logout",
+    // };
+
+    // axios(config)
+    //   .then(function (response) {
+    //     console.log(JSON.stringify(response.data));
+    //     Navigate("/agentLogin");
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
   };
 
   return (
