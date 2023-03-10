@@ -20,15 +20,15 @@ const Home = () => {
   const [viewDetails, setViewDetails] = useState({});
   const [showCheckcomp, setShowCheckcomp] = useState(false);
   const [viewTicketMod, setViewTicketMod] = useState(false);
-  // const [viewEditTicket, setViewEditTicket] = useState(false);
+  const [viewEditTicket, setViewEditTicket] = useState(false);
 
-  // const editTicketMod = () => {
-  //   setViewEditTicket(true);
-  // };
+  const editTicketMod = () => {
+    setViewEditTicket(true);
+  };
 
-  // const closeEditTicket = () => {
-  //   setViewEditTicket(false);
-  // };
+  const closeEditTicket = () => {
+    setViewEditTicket(false);
+  };
 
   const handleOpenModal = () => {
     setOpenModal(!openModal);
@@ -68,9 +68,9 @@ const Home = () => {
 
     axios(config)
       .then(function () {
-        var newTickets = ticketData.filter((item) => item.id !== id);
-        setTicketData(newTickets);
-        // getData();
+        // var newTickets = ticketData.filter((item) => item.id !== id);
+        // setTicketData(newTickets);
+        getData();
       })
       .catch(function (error) {
         console.log(error);
@@ -110,6 +110,9 @@ const Home = () => {
 
   return (
     <div className="flex">
+      {viewEditTicket && (
+        <EditTicket closeEditTicket={closeEditTicket} getData={getData} />
+      )}
       {openModal && (
         <AssignTicket
           viewDetails={viewDetails}
@@ -187,7 +190,7 @@ const Home = () => {
                   ticket={tickets}
                   TicketTime=""
                   ViewTicketDetail={() => viewOneUser(tickets)}
-                  // EditTicketMod={editTicketMod}
+                  editTicketMod={editTicketMod}
                   HandleOpenModal={handleOpenModal}
                   CloseTicket={() => closeTicket(tickets.id)}
                   DeleteTicket={() => deleteTicketHandle(tickets.id)}

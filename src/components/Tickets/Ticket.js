@@ -18,7 +18,7 @@ const Ticket = ({
   DeleteTicket,
   ViewTicketDetail,
   TicketPage,
-  // EditTicketMod,
+  editTicketMod,
   HandleTicketMod,
 }) => {
   const [drop, setDrop] = useState(false);
@@ -26,14 +26,21 @@ const Ticket = ({
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const [isChecked, setIsChecked] = useState(false);
-  const [viewEditTicket, setViewEditTicket] = useState(false);
+  // const [viewEditTicket, setViewEditTicket] = useState(false);
 
-  const closeEditTicket = () => {
-    setViewEditTicket(false);
-  };
+  // const closeEditTicket = () => {
+  //   setViewEditTicket(false);
+  // };
 
-  const editTicketMod = () => {
-    setViewEditTicket(true);
+  // const editTicketMod = () => {
+  //   setViewEditTicket(true);
+  // };
+
+  const storeTicket = (ticket) => {
+    let { id, reason } = ticket;
+
+    localStorage.setItem("Reason", reason);
+    localStorage.setItem("selected", id);
   };
 
   const open = Boolean(anchorEl);
@@ -55,11 +62,7 @@ const Ticket = ({
 
   return (
     <div>
-      {viewEditTicket && <EditTicket closeEditTicket={closeEditTicket} />}
-      <section
-        className="bg-white mt-3 min-w-[976px] w-full flex justify-between p-3 rounded-[10px]"
-        // onClick={() => Navigate("/ticketDetails")}
-      >
+      <section className="bg-white mt-3 min-w-[976px] w-full flex justify-between p-3 rounded-[10px]">
         <div className="flex gap-4">
           <input
             type="checkbox"
@@ -110,7 +113,10 @@ const Ticket = ({
               open={open}
               handleClose={handleClose}
               HandleTicketMod={HandleTicketMod}
-              EditTicketMod={editTicketMod}
+              EditTicketMod={() => {
+                storeTicket(ticket);
+                editTicketMod();
+              }}
               TicketPage={TicketPage}
             />
           )}

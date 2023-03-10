@@ -11,7 +11,14 @@ const EditTicket = ({ closeEditTicket, getData }) => {
 
   const [loading, setLoading] = useState(false);
 
-  function handleEditTicket(e, id) {
+  const [id, setID] = useState(null);
+
+  useEffect(() => {
+    setID(localStorage.getItem("selected"));
+    setReason(localStorage.getItem("Reason"));
+  }, []);
+
+  function handleEditTicket(e) {
     e.preventDefault();
 
     setLoading(true);

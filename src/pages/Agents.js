@@ -71,8 +71,6 @@ const Agents = () => {
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-        // var newAgents = agentData.filter((item) => item.id !== id);
-        // setAgentData(newAgents);
         getAgents();
       })
       .catch(function (error) {

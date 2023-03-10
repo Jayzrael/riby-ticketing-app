@@ -11,11 +11,13 @@ import { useSignIn } from "react-auth-kit";
 const QaLogin = () => {
   const Navigate = useNavigate();
 
-  const errRef = useRef();
+  const [input, setInput] = useState({
+    email: "",
+    password: "",
+  });
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errMsg, setErrMsg] = useState("");
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -28,10 +30,6 @@ const QaLogin = () => {
   const handleShow = () => {
     setShow(true);
   };
-
-  useEffect(() => {
-    setErrMsg("");
-  }, [email, password]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -120,8 +118,6 @@ const QaLogin = () => {
       });
   };
 
-  // console.log("logged in as:", user);
-
   return (
     <>
       {show && <ResetPwdModal Show={handleShow} Close={handleClose} />}
@@ -146,17 +142,6 @@ const QaLogin = () => {
           <div className="mb-5">
             <img src={Riby} alt="" />
           </div>
-          <section>
-            <p
-              ref={errRef}
-              className={
-                errMsg ? "bg-red-500 text-white text-xs p-2" : "hidden"
-              }
-              aria-live="assertive"
-            >
-              {errMsg}
-            </p>
-          </section>
           <div className="w-[352px] h-[388px] max-w-[500px] my-7">
             <form
               className="flex flex-col w-full h-full  bg-white rounded-[10px]"

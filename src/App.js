@@ -12,6 +12,7 @@ import { SkeletonTheme } from "react-loading-skeleton";
 import { AuthProvider, RequireAuth } from "react-auth-kit";
 import QaLogin from "./pages/Login";
 import AgentLogin from "./pages/Login/AgentLogin";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/crm" element={<Crm />} />
               <Route path="/customerFormPage" element={<CustomerFormPage />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </Router>
         </AuthProvider>

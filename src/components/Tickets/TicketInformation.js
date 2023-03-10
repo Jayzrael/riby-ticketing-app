@@ -47,7 +47,9 @@ const TicketInformation = ({ ticketDetails }) => {
           </div>
           <div>
             <span className="text-[16px] font-[500] text-[#0D233D]">
-              Agent Name
+              {ticketDetails?.agentId.firstname +
+                " " +
+                ticketDetails?.agentId.lastname}
             </span>
           </div>
         </div>
@@ -59,7 +61,7 @@ const TicketInformation = ({ ticketDetails }) => {
           </div>
           <div>
             <span className="text-[16px] font-[500] text-[#0D233D]">
-              Date here
+              {ticketDetails?.updatedAt}
             </span>
           </div>
         </div>
