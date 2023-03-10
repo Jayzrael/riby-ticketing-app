@@ -214,7 +214,7 @@ const Home = () => {
         </div>
       </div>
       <TablePagination
-        rowsPerPageOptions={[5, 10, 15]}
+        rowsPerPageOptions={[10, 15, 20]}
         component="div"
         count={ticketData.length}
         rowsPerPage={rowsPerPage}
