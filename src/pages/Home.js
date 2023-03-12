@@ -134,7 +134,6 @@ const Home = () => {
             getData={getData}
           />
         )}
-        {/* {viewEditTicket && <EditTicket closeEditTicket={closeEditTicket} />} */}
         <Sidebar />
         <div className="w-full h-full">
           <Navbar />
@@ -143,7 +142,6 @@ const Home = () => {
               <h1 className="text-2xl font-bold">Tickets</h1>
               <div className="flex gap-8">
                 <div className={showCheckcomp ? "flex gap-4" : "hidden"}>
-                  {/* <div className="flex gap-4"> */}
                   <div
                     className="flex justify-center text-red-600 items-center gap-1 cursor-pointer"
                     onClick={() => closeTicket(viewDetails.id)}

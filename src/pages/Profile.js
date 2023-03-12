@@ -273,10 +273,16 @@ const Profile = () => {
                     ? appUser.firstName + " " + appUser.lastName
                     : appUser._doc.firstname + " " + appUser._doc.lastname}
                 </h1>
-                {/* <input type="file" name="Edit Photo" id="edit photo" /> */}
-                <p className="text-[#EE095B] text-[14px] font-[600] cursor-pointer">
+                {/* <p className="text-[#EE095B] text-[14px] font-[600] cursor-pointer">
                   Edit Photo
-                </p>
+                </p> */}
+                <input
+                  type="file"
+                  name="edit-photo"
+                  id="edit-photo"
+                  required=""
+                  capture
+                />
               </div>
             </section>
             {/* last form  */}
