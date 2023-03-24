@@ -142,12 +142,12 @@ const QaLogin = () => {
           <div className="mb-5">
             <img src={Riby} alt="" />
           </div>
-          <div className="w-[352px] h-[388px] max-w-[500px] my-7">
+          <div className="my-7">
             <form
-              className="flex flex-col w-full h-full  bg-white rounded-[10px]"
+              className="flex flex-col p-5 bg-white rounded-[10px]"
               onSubmit={handleSubmit}
             >
-              <h2 className="text-[#0D233D] font-[600] text-[24px] text-center mt-10">
+              <h2 className="text-[#0D233D] font-[600] text-[24px] text-center mt-5">
                 Sign In
               </h2>
               <div className="flex flex-col justify-center text-[#0D233D] m-4 ">
@@ -174,6 +174,14 @@ const QaLogin = () => {
                   placeholder="Password"
                 />
               </div>
+              <p className="text-[12px] ml-5">
+                Are you an Agent?{" "}
+                <Link to="/agent-login">
+                  <span className="text-blue-800 text-[14px] cursor-pointer">
+                    Sign in{" "}
+                  </span>
+                </Link>
+              </p>
               <button
                 className="w-[304px] h-[40px] bg-[#EE095B] ml-auto mr-auto text-white my-2 rounded-[5px]"
                 type="submit"

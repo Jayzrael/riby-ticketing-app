@@ -70,46 +70,48 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="flex-none w-[240px] bg-white">
+    <div className="flex-none w-[20%] bg-white">
       {/* Riby Logo */}
-      <div className="flex justify-center items-center p-8 mb-4">
-        <Link to={appUser.role == "admin" ? "/" : "/agentLogin"}>
-          <img src={RibyLogo} alt="" />
-        </Link>
-      </div>
-      {/* Dashboard pages */}
-      <div className="flex flex-col ">
-        {appUser.role == "admin"
-          ? navbarList.map((item) => (
-              <ul key={item.id} className="ml-3 mr-3">
-                <li>
-                  <NavLink
-                    activeclassname="active"
-                    to={item.linkTo}
-                    className={item.className}
-                  >
-                    <div className="flex justify-center items-center gap-3">
-                      <img src={item.img} alt="" /> <span>{item.item}</span>
-                    </div>
-                  </NavLink>
-                </li>
-              </ul>
-            ))
-          : agentNav.map((item) => (
-              <ul key={item.id} className="ml-3 mr-3">
-                <li>
-                  <NavLink
-                    activeclassname="active"
-                    to={item.linkTo}
-                    className={item.className}
-                  >
-                    <div className="flex justify-center items-center gap-3">
-                      <img src={item.img} alt="" /> <span>{item.item}</span>
-                    </div>
-                  </NavLink>
-                </li>
-              </ul>
-            ))}
+      <div className="fixed min-w-[35vh] z-[1]">
+        <div className="flex justify-center items-center p-8 mb-4">
+          <Link to={appUser.role == "admin" ? "/" : "/agent-login"}>
+            <img src={RibyLogo} alt="" />
+          </Link>
+        </div>
+        {/* Dashboard pages */}
+        <div className="flex flex-col ">
+          {appUser.role == "admin"
+            ? navbarList.map((item) => (
+                <ul key={item.id} className="ml-3 mr-3">
+                  <li>
+                    <NavLink
+                      activeclassname="active"
+                      to={item.linkTo}
+                      className={item.className}
+                    >
+                      <div className="flex justify-center items-center gap-3">
+                        <img src={item.img} alt="" /> <span>{item.item}</span>
+                      </div>
+                    </NavLink>
+                  </li>
+                </ul>
+              ))
+            : agentNav.map((item) => (
+                <ul key={item.id} className="ml-3 mr-3">
+                  <li>
+                    <NavLink
+                      activeclassname="active"
+                      to={item.linkTo}
+                      className={item.className}
+                    >
+                      <div className="flex justify-center items-center gap-3">
+                        <img src={item.img} alt="" /> <span>{item.item}</span>
+                      </div>
+                    </NavLink>
+                  </li>
+                </ul>
+              ))}
+        </div>
       </div>
     </div>
   );

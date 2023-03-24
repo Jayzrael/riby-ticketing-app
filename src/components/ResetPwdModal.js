@@ -146,7 +146,7 @@ const ResetPwdModal = ({ Close }) => {
               </p>
             </section>
           ) : (
-            <section className="flex flex-col justify-center items-center  max-h-[40vh]">
+            <section className="flex flex-col justify-center items-center ">
               <p className="text-red-600 text-[12px] pb-2 text-center">
                 Provide the email you used to register
               </p>

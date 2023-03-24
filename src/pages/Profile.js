@@ -108,6 +108,7 @@ const Profile = () => {
           progress: undefined,
           theme: "colored",
         });
+        setInput([input.currentPassword === ""]);
       })
       .catch(function (err) {
         setLoading(false);
@@ -208,7 +209,7 @@ const Profile = () => {
                       type="text"
                       name="firstname"
                       value={
-                        appUser.role == "admin"
+                        appUser.role === "admin"
                           ? appUser.firstName
                           : appUser._doc.firstname
                       }
@@ -228,7 +229,7 @@ const Profile = () => {
                       type="text"
                       name="lastname"
                       value={
-                        appUser.role == "admin"
+                        appUser.role === "admin"
                           ? appUser.lastName
                           : appUser._doc.lastname
                       }
@@ -250,7 +251,7 @@ const Profile = () => {
                     type="text"
                     name="email"
                     value={
-                      appUser.role == "admin"
+                      appUser.role === "admin"
                         ? appUser.email
                         : appUser._doc.email
                     }
@@ -269,20 +270,13 @@ const Profile = () => {
                   />
                 </div>
                 <h1 className="text-[18px] font-[600] text-[#0D233D]">
-                  {appUser.role == "admin"
+                  {appUser.role === "admin"
                     ? appUser.firstName + " " + appUser.lastName
                     : appUser._doc.firstname + " " + appUser._doc.lastname}
                 </h1>
-                {/* <p className="text-[#EE095B] text-[14px] font-[600] cursor-pointer">
+                <p className="text-[#EE095B] text-[14px] font-[600] cursor-pointer">
                   Edit Photo
-                </p> */}
-                <input
-                  type="file"
-                  name="edit-photo"
-                  id="edit-photo"
-                  required=""
-                  capture
-                />
+                </p>
               </div>
             </section>
             {/* last form  */}

@@ -70,7 +70,7 @@ const DetachedTable = ({
           className="flex justify-center items-center"
         >
           <Grid item lg={2}>
-            <StyledAvatar alt={data.firstname} src="." />
+            <StyledAvatar>{data.firstname[0] + data.lastname[0]}</StyledAvatar>
           </Grid>
           <Grid item lg={10}>
             {data.firstname + " " + data.lastname}

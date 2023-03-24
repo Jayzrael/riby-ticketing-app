@@ -11,6 +11,8 @@ import AgentTable from "../components/AgentTable";
 import AgentMod from "../components/AgentMod";
 import axios, { BaseUrl } from "../Api/axios";
 import EditMod from "../components/EditMod";
+import { Input } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 
 const Agents = () => {
   // const [open, setOpen] = useState(false);
@@ -21,6 +23,7 @@ const Agents = () => {
   const [editModal, setEditModal] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [skloader, setSkloader] = useState(true);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -49,8 +52,9 @@ const Agents = () => {
     axios(config)
       .then(function (response) {
         setLoading(false);
-        console.log(JSON.stringify(response.data.agents));
+        console.log("all agents", response.data.agents);
         setAgentData(response.data.agents);
+        setSkloader(false);
         localStorage.setItem(
           "agentID",
           JSON.stringify(response.data.agents.id)
@@ -105,14 +109,14 @@ const Agents = () => {
       <Sidebar />
       <div className="w-full h-full">
         <Navbar />
-        <section className="bg-slate-100 w-full h-full p-8">
+        <section className="bg-slate-100 w-full h-full p-8 mt-[63px]">
           {/* Agent header  */}
           <div className="flex justify-between items-center ml-11">
             <h1 className="text-[24px] font-[600]">Agents</h1>
             {/* input and button  */}
             <div className="flex gap-4 mr-10">
               <div className={open ? "hidden" : ""}>
-                <BsCircle
+                {/* <BsCircle
                   color="#C9C9C9"
                   className="absolute z-10 top-[17.5%] right-[33%]"
                 />{" "}
@@ -124,6 +128,16 @@ const Agents = () => {
                   name=""
                   id=""
                   placeholder="Search for agents"
+                /> */}
+                <Input
+                  size="large"
+                  placeholder="Search for agents"
+                  type="search"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  name=""
+                  id=""
+                  prefix={<UserOutlined />}
                 />
               </div>
               <div>
@@ -150,6 +164,7 @@ const Agents = () => {
               selectedId={selectedId}
               DeleteAgent={deleteAgent}
               loading={loading}
+              skloader={skloader}
             />
           </div>
         </section>

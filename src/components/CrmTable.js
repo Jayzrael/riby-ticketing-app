@@ -21,6 +21,7 @@ import {
   Typography,
 } from "@mui/material";
 import TicketMenu2 from "./MenuItem/TicketMenu2";
+import SkeletonAgents from "./Skeleton/SkeletonAgents";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -47,7 +48,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const CrmTable = ({ ticketData, Search }) => {
+const CrmTable = ({ ticketData, Search, skloader }) => {
   // const [ticketData, setTicketData] = useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -127,7 +128,9 @@ const CrmTable = ({ ticketData, Search }) => {
                       className="flex justify-center items-center"
                     >
                       <Grid item lg={2}>
-                        <StyledAvatar alt={data.firstName} src="." />
+                        <StyledAvatar>
+                          {data.firstName[0] + data.lastName[0]}
+                        </StyledAvatar>
                       </Grid>
                       <Grid item lg={10}>
                         {data.firstName + " " + data.lastName}
@@ -179,18 +182,21 @@ const CrmTable = ({ ticketData, Search }) => {
               ))}
           </TableBody>
           <TableFooter>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 15]}
-              component="div"
-              count={ticketData.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
+            {!skloader && (
+              <TablePagination
+                rowsPerPageOptions={[10, 15, 20]}
+                component="div"
+                count={ticketData.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            )}
           </TableFooter>
         </Table>
       </TableContainer>
+      {skloader && [1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => <SkeletonAgents />)}
     </div>
   );
 };

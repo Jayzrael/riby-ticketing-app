@@ -17,38 +17,36 @@ import NotFound from "./pages/NotFound";
 function App() {
   return (
     <>
-      <SkeletonTheme baseColor="#202020" highlightColor="#444">
-        <AuthProvider
-          authType={"cookie"}
-          authName={"_auth"}
-          cookieDomain={window.location.hostname}
-          cookieSecure={false}
-        >
-          <Router>
-            <Routes>
-              <Route exact path="/" element={<QaLogin />} />
-              <Route exact path="/agentLogin" element={<AgentLogin />} />
-              <Route
-                path="/home"
-                element={
-                  <RequireAuth loginPath="/">
-                    <Home />
-                  </RequireAuth>
-                }
-              />
-              <Route path="/agents" element={<Agents />} />
-              <Route path="/analytics" element={<Analytics />} />
-              <Route path="/chats" element={<Chats />} />
-              <Route path={`/ticketDetails/:id`} element={<TicketDetails />} />
-              <Route path="/agentForm" element={<AgentForm />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/crm" element={<Crm />} />
-              <Route path="/customerFormPage" element={<CustomerFormPage />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Router>
-        </AuthProvider>
-      </SkeletonTheme>
+      <AuthProvider
+        authType={"cookie"}
+        authName={"_auth"}
+        cookieDomain={window.location.hostname}
+        cookieSecure={false}
+      >
+        <Router>
+          <Routes>
+            <Route exact path="/" element={<QaLogin />} />
+            <Route exact path="/agent-login" element={<AgentLogin />} />
+            <Route
+              path="/home"
+              element={
+                <RequireAuth loginPath="/">
+                  <Home />
+                </RequireAuth>
+              }
+            />
+            <Route path="/agents" element={<Agents />} />
+            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/chats" element={<Chats />} />
+            <Route path={`/ticketDetails/:id`} element={<TicketDetails />} />
+            <Route path="/agentForm" element={<AgentForm />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/crm" element={<Crm />} />
+            <Route path="/customerFormPage" element={<CustomerFormPage />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Router>
+      </AuthProvider>
     </>
   );
 }

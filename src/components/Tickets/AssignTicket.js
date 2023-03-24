@@ -114,7 +114,7 @@ const AssignTicket = ({ CloseModal, viewDetails, getData }) => {
   return (
     <>
       {loading && (
-        <div className="fixed flex justify-center items-center w-full h-full bg-[#0D233D] bg-opacity-[0.7] z-10 inset-0">
+        <div className="fixed flex justify-center items-center w-full h-full bg-[#0D233D] bg-opacity-[0.7] z-30 inset-0">
           <MutatingDots
             height="100"
             width="100"
@@ -128,7 +128,7 @@ const AssignTicket = ({ CloseModal, viewDetails, getData }) => {
           />
         </div>
       )}
-      <div className="fixed bg-black bg-opacity-[0.7] w-screen h-screen">
+      <div className="fixed bg-black bg-opacity-[0.7] w-screen h-screen z-10">
         <div className="fixed w-[352px] h-[240px] bg-white rounded-[10px] top-[30%] left-[40%]">
           <GiCancel
             color="red"

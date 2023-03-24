@@ -28,17 +28,21 @@ const Analytics = () => {
         id: "basic-bar",
       },
       xaxis: {
-        categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
+        categories: [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023],
       },
     },
     series: [
       {
-        name: "series-1",
-        data: [30, 40, 45, 50, 49, 60, 70, 91],
+        name: "Average Response Time",
+        data: [3, 4, 4, 5, 4, 6, 7, 9],
       },
       {
-        name: "series-2",
-        data: [25, 30, 40, 33, 27, 50, 60, 81],
+        name: "Average Wait Time",
+        data: [2, 3, 4, 3, 2, 5, 6, 8],
+      },
+      {
+        name: "Average Resolution Time",
+        data: [2, 3, 4, 3, 2, 5, 6, 8],
       },
     ],
   });
@@ -146,7 +150,7 @@ const Analytics = () => {
       <Sidebar />
       <div className="w-full max-h-full">
         <Navbar />
-        <div className="bg-slate-100 w-full h-full p-8">
+        <div className="bg-slate-100 w-full h-full p-8 mt-20">
           {appUser.role === "admin" ? (
             <div>
               <section>
@@ -225,7 +229,7 @@ const Analytics = () => {
               {/* charts  */}
               <section className="flex gap-[60px]">
                 {/* chart  */}
-                <div>
+                {/* <div>
                   <ResponseCard
                     ClassName="flex flex-col gap-[22px] bg-white min-w-[552px] h-[232px] border-[0.5px] border-[#F1F1F1] border-solid rounded-[10px] p-3 ml-2"
                     ClassName0="text-[#0D233D] text-[16px] font-[500]"
@@ -234,10 +238,10 @@ const Analytics = () => {
                     ClassName3="flex gap-[296px]"
                     ClassName4="flex gap-[98px]"
                   />
-                </div>
+                </div> */}
 
                 {/* card  0.5px solid ;*/}
-                <section className="flex flex-col gap-4 mt-[-127px] ml-[-20px] justify-center items-center w-[400px] h-[360px] bg-white border-[#F1F1F1] border-[0.5px] border-solid rounded-[10px]">
+                {/* <section className="flex flex-col gap-4 mt-[-127px] ml-[-20px] justify-center items-center w-[400px] h-[360px] bg-white border-[#F1F1F1] border-[0.5px] border-solid rounded-[10px]">
                   <h1 className="text-[48px] font-[600] text-[#0D233D]">3.0</h1>
                   <div className="flex gap-1">
                     <AiFillStar color="red" size={25} />
@@ -266,7 +270,7 @@ const Analytics = () => {
                       Bad(3)
                     </span>
                   </div>
-                </section>
+                </section> */}
                 {/* <ResponseCard ClassName='w-[400px] h-[360px] bg-white border-[#F1F1F1] border-[0.5px] border-solid rounded-[10px]'
                            ClassName0='hidden'
                            ClassName1='hidden'

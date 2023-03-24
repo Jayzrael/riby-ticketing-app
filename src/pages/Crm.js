@@ -28,14 +28,23 @@ const Crm = () => {
   const handleClose = () => setOpen(false);
   const [drop, setDrop] = useState(false);
   const [ticketData, setTicketData] = useState([]);
+  const [ticketData2, setTicketData2] = useState([]);
   const [search, setSearch] = useState("");
+  const [skloader, setSkloader] = useState(true);
 
   const handleMenu = () => {
     setDrop(!drop);
   };
 
+  const whoIs = localStorage.getItem("user");
+  const appUser = JSON.parse(whoIs);
+
   useEffect(() => {
     getData();
+  }, []);
+
+  useEffect(() => {
+    getData2();
   }, []);
 
   const getData = () => {
@@ -49,6 +58,25 @@ const Crm = () => {
       .then((res) => {
         console.log(res.data.tickets);
         setTicketData(res.data.tickets);
+        setSkloader(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getData2 = () => {
+    var config = {
+      method: "get",
+      url: `${BaseUrl}/tickets/agent`,
+      headers: {},
+    };
+
+    axios(config)
+      .then((res) => {
+        console.log("agent tickets", res.data.tickets);
+        setTicketData2(res.data.tickets);
+        setSkloader(false);
       })
       .catch((err) => {
         console.log(err);
@@ -61,19 +89,16 @@ const Crm = () => {
       <Sidebar />
       <div className="w-full h-full">
         <Navbar />
-        <section className="bg-slate-100 w-full h-screen p-8">
+        <section className="bg-slate-100 w-full h-screen p-8 mt-20">
           {/* Agent header  */}
           <div className="flex justify-between items-center ml-11">
             <h1 className="text-[24px] font-[600]">CRM</h1>
             {/* input and button  */}
             <div className="flex gap-4 mr-3">
-              <div>
-                <BsCircle
-                  color="#C9C9C9"
-                  className="absolute z-10 top-[17.5%] right-[31%]"
-                />{" "}
+              <div className="flex justify-between items-center w-[20rem] border-[1px] rounded-[5px] border-solid border-[#C9C9C9] px-2">
+                <BsCircle color="#C9C9C9" />{" "}
                 <input
-                  className="relative w-[272px] h-[40px] border-[1px] border-solid border-[#C9C9C9] rounded-[5px] pl-12 outline-none"
+                  className="w-full h-[40px] rounded-[5px] pl-2 outline-none bg-transparent"
                   type="search"
                   name=""
                   id=""
@@ -96,8 +121,9 @@ const Crm = () => {
           <div className="mt-16 ">
             <CrmTable
               Search={search}
-              ticketData={ticketData}
+              ticketData={appUser.role == "admin" ? ticketData : ticketData2}
               TicketPage="/ticketDetails"
+              skloader={skloader}
             />
           </div>
         </section>

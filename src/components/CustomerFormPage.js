@@ -161,7 +161,7 @@ export default function CustomerFormPage({ Open, HandleClose }) {
             : "fixed bg-black bg-opacity-[0.7] w-screen h-screen z-10"
         }
       >
-        <div className="fixed w-[352px] h-[100%] p-4 overflow-scroll translate-x-[-15%] translate-y-[-19%] bg-white rounded-[10px] top-[20%] left-[40%]">
+        <div className="fixed w-[352px] h-[70vh] p-4 overflow-scroll translate-x-[-15%] translate-y-[-19%] bg-white rounded-[10px] top-[30%] left-[40%]">
           <GiCancel
             color="red"
             size={20}

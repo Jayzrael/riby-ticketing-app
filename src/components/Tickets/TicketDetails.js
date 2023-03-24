@@ -9,10 +9,21 @@ import axios, { BaseUrl } from "../../Api/axios";
 import { useParams } from "react-router-dom";
 import { MutatingDots } from "react-loader-spinner";
 import { toast, ToastContainer } from "react-toastify";
+import ReplyTicket from "./ReplyTicket";
 
 const TicketDetails = () => {
   const [ticketDetails, setTicketDetails] = useState();
   const [loading, setLoading] = useState(false);
+  const [openReply, setOpenReply] = useState(false);
+  const [skloader, setSkloader] = useState(true);
+
+  function replyHandle() {
+    setOpenReply(!openReply);
+  }
+
+  const handleClose = () => {
+    setOpenReply(false);
+  };
 
   const { id } = useParams();
   console.log("id in details", id);
@@ -28,6 +39,7 @@ const TicketDetails = () => {
       .then(function (response) {
         console.log("single ticket", response.data.ticket);
         setTicketDetails(response.data.ticket);
+        setSkloader(false);
       })
       .catch(function (error) {
         console.log(error);
@@ -64,6 +76,7 @@ const TicketDetails = () => {
           progress: undefined,
           theme: "colored",
         });
+        getTicket(id);
       })
       .catch(function (err) {
         setLoading(false);
@@ -134,11 +147,15 @@ const TicketDetails = () => {
           />
         </div>
       )}
+      {openReply && (
+        <ReplyTicket ticketDetails={ticketDetails} handleClose={handleClose} />
+      )}
+
       <div className="flex">
         <Sidebar />
         <div className="w-full h-full">
           <Navbar />
-          <section className="bg-slate-100 w-full h-full p-8">
+          <section className="bg-slate-100 w-full h-full p-8 mt-20">
             <div className="flex justify-between">
               <div className="flex justify-center items-center">
                 <span className="text-[#707070] text-[14px] font-[400]">
@@ -149,15 +166,27 @@ const TicketDetails = () => {
                 </span>
               </div>
               <div
-                className="flex justify-center items-center gap-1 cursor-pointer"
+                className={
+                  ticketDetails?.status === "closed"
+                    ? "hidden"
+                    : "flex justify-center items-center gap-1 cursor-pointer"
+                }
                 onClick={() => closeTicket(ticketDetails.id)}
               >
                 <img src={CloseTicket} alt="" />{" "}
                 <span className="text-red-500 mr-2">Close Ticket</span>
               </div>
             </div>
-            <TicketInformation ticketDetails={ticketDetails} />
-            <TicketMessage ticketDetails={ticketDetails} />
+            <TicketInformation
+              ticketDetails={ticketDetails}
+              skloader={skloader}
+            />
+            <TicketMessage
+              ticketDetails={ticketDetails}
+              replyHandle={replyHandle}
+              openReply={openReply}
+              skloader={skloader}
+            />
           </section>
         </div>
         <ToastContainer

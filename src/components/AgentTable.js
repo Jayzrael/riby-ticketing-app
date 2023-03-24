@@ -1,5 +1,4 @@
 import React from "react";
-import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,25 +9,9 @@ import TableRow from "@mui/material/TableRow";
 import TablePagination from "@mui/material/TablePagination";
 import Paper from "@mui/material/Paper";
 import { useState } from "react";
-import { useEffect } from "react";
-import axios, { BaseUrl } from "../Api/axios";
-import {
-  Avatar,
-  Grid,
-  makeStyles,
-  Menu,
-  MenuItem,
-  TableFooter,
-  Typography,
-} from "@mui/material";
-// import CircleIcon from "@material-ui/icons/Circle";
-// import FiberManualRecordRoundedIcon from "@material-ui/icons/FiberManualRecordRounded";
-import { BsFillCircleFill } from "react-icons/bs";
-import EditMod from "./EditMod";
-import EditableRow from "./EditableRow";
-import { Fragment } from "react";
+import { Avatar, TableFooter } from "@mui/material";
 import DetachedTable from "./DetachedTable";
-import AgentTableSk from "./Skeleton/AgentTableSk";
+import SkeletonAgents from "./Skeleton/SkeletonAgents";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -61,10 +44,10 @@ const AgentTable = ({
   AgentData,
   DeleteAgent,
   Search,
-  loading,
+  skloader,
 }) => {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [selectedId, setSelectedId] = useState(-1);
 
@@ -105,6 +88,7 @@ const AgentTable = ({
                 ? item
                 : item.firstname.toLowerCase().includes(Search);
             })
+              .reverse()
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map(
                 (data) => (
@@ -122,19 +106,23 @@ const AgentTable = ({
                 // )
               )}
           </TableBody>
+
           <TableFooter>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 15]}
-              component="div"
-              count={AgentData.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
+            {!skloader && (
+              <TablePagination
+                rowsPerPageOptions={[10, 15, 20]}
+                component="div"
+                count={AgentData.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            )}
           </TableFooter>
         </Table>
       </TableContainer>
+      {skloader && [1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => <SkeletonAgents />)}
     </div>
   );
 };
