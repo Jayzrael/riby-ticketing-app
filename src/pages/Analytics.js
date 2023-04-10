@@ -108,7 +108,11 @@ const Analytics = () => {
 
     PlainReq(config)
       .then(function (response) {
-        setCount2(response.data.tickets.length);
+        const received = response.data.tickets;
+        const totalOpened = received.filter(
+          (ticket) => ticket.status === "open"
+        );
+        setCount2(totalOpened.length);
       })
       .catch(function (error) {
         console.log(error);
