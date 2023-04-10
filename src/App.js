@@ -8,7 +8,6 @@ import AgentForm from "./components/AgentForm";
 import Profile from "./pages/Profile";
 import Crm from "./pages/Crm";
 import CustomerFormPage from "./components/CustomerFormPage";
-import { SkeletonTheme } from "react-loading-skeleton";
 import { AuthProvider, RequireAuth } from "react-auth-kit";
 import QaLogin from "./pages/Login";
 import AgentLogin from "./pages/Login/AgentLogin";

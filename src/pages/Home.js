@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import { useEffect } from "react";
-import axios, { BaseUrl } from "../Api/axios";
+import { BaseUrl, PlainReq } from "../Api/axios";
 import close from "../assets/closeticket.png";
 import assign from "../assets/assignticket.png";
 import deleteTicket from "../assets/deleteticket.png";
@@ -13,6 +13,8 @@ import ViewTicket from "../components/Tickets/ViewTicket";
 import EditTicket from "../components/Tickets/EditTicket";
 import TablePagination from "@mui/material/TablePagination";
 import SkeletonTicket from "../components/Skeleton/SkeletonTicket";
+import ConfirmDelete from "../components/ConfirmDelete";
+import { toast } from "react-toastify";
 
 const Home = () => {
   const [ticketData, setTicketData] = useState([]);
@@ -24,13 +26,27 @@ const Home = () => {
   const [totalTickets2, setTotalTickets2] = useState(0);
   const [viewDetails, setViewDetails] = useState({});
   const [showCheckcomp, setShowCheckcomp] = useState(false);
-  const [viewTicketMod, setViewTicketMod] = useState(false);
   const [viewEditTicket, setViewEditTicket] = useState(false);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const whoIs = localStorage.getItem("user");
   const appUser = JSON.parse(whoIs);
+
+  const adminToken = localStorage.getItem("token");
+  const AdminToken = JSON.parse(adminToken);
+
+  const agentToken = localStorage.getItem("agentToken");
+  const token = JSON.parse(agentToken);
+
+  const handleOpenDel = () => {
+    setConfirmDelete(!confirmDelete);
+  };
+  const closeDel = () => {
+    setConfirmDelete(false);
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -55,11 +71,11 @@ const Home = () => {
   const CloseModal = () => setOpenModal(false);
 
   useEffect(() => {
-    getData();
-  }, []);
-
-  useEffect(() => {
-    getData2();
+    if (appUser.role === "admin") {
+      getData();
+    } else {
+      getData2();
+    }
   }, []);
 
   const getData = () => {
@@ -69,7 +85,7 @@ const Home = () => {
       headers: {},
     };
 
-    axios(config)
+    PlainReq(config)
       .then((res) => {
         console.log(res.data.tickets);
         setTicketData(res.data.tickets);
@@ -85,13 +101,16 @@ const Home = () => {
   const getData2 = () => {
     var config = {
       method: "get",
-      url: `${BaseUrl}/tickets/agent`,
-      headers: {},
+      url: "https://dev-apis.riby.ng/cus/api/v1/tickets/agent",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     };
 
-    axios(config)
+    PlainReq(config)
       .then((res) => {
-        console.log("agent tickets", res.data.tickets);
+        console.log("agent tickets", res.data);
         setTicketData2(res.data.tickets);
         setTotalTickets2(res.data.tickets.length);
         setSkloader(false);
@@ -101,9 +120,13 @@ const Home = () => {
       });
   };
 
+  console.log("bearer token", token);
+
   console.log("total agentntickets", totalTickets2);
 
   const deleteTicketHandle = (id) => {
+    setLoading(true);
+
     setShowCheckcomp(false);
 
     var config = {
@@ -112,16 +135,79 @@ const Home = () => {
       headers: {},
     };
 
-    axios(config)
+    PlainReq(config)
       .then(function () {
         if (appUser.role === "admin") {
           getData();
         } else {
           getData2();
         }
+
+        setLoading(false);
+        toast.success("Ticket Deleted!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        setTimeout(() => {
+          closeDel();
+        }, 1000);
+        getData();
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch(function (err) {
+        console.log(err);
+        setLoading(false);
+        if (!err?.response) {
+          toast.error("No server response", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        } else if (err.response?.status === 400) {
+          toast.error("invalid email or password", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        } else if (err.response?.status === 401) {
+          toast.error("Unauthorized", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        } else {
+          toast.error("failed", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+        setLoading(false);
       });
   };
 
@@ -131,11 +217,14 @@ const Home = () => {
     var config = {
       method: "patch",
       url: "https://dev-apis.riby.ng/cus/api/v1/tickets/close",
-      headers: {},
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${AdminToken}`,
+      },
       data: data,
     };
 
-    axios(config)
+    PlainReq(config)
       .then(function () {
         if (appUser.role === "admin") {
           getData();
@@ -153,6 +242,10 @@ const Home = () => {
     setSelectedTicket(e.target.value);
   };
 
+  const setAssignID = (tickets) => {
+    setViewDetails(tickets);
+  };
+
   const viewOneUser = (tickets) => {
     setViewDetails(tickets);
     setShowCheckcomp(!showCheckcomp);
@@ -161,6 +254,14 @@ const Home = () => {
   return (
     <>
       <div className="flex w-full min-h-screen">
+        {confirmDelete && (
+          <ConfirmDelete
+            closeDel={closeDel}
+            loading={loading}
+            viewDetails={viewDetails}
+            deleteTicketHandle={deleteTicketHandle}
+          />
+        )}
         {viewEditTicket && (
           <EditTicket
             closeEditTicket={closeEditTicket}
@@ -172,7 +273,7 @@ const Home = () => {
             viewDetails={viewDetails}
             CloseModal={CloseModal}
             Open={openModal}
-            getData={appUser.role == "admin" ? getData : getData2}
+            getData={appUser.role === "admin" ? getData : getData2}
           />
         )}
         <Sidebar />
@@ -192,7 +293,11 @@ const Home = () => {
                     Close ticket
                   </div>
                   <div
-                    className="flex justify-center text-red-600 items-center gap-1 cursor-pointer"
+                    className={
+                      appUser.role === "admin"
+                        ? "flex justify-center text-red-600 items-center gap-1 cursor-pointer"
+                        : "hidden"
+                    }
                     onClick={handleOpenModal}
                   >
                     {" "}
@@ -200,8 +305,12 @@ const Home = () => {
                     Assign ticket
                   </div>
                   <div
-                    className="flex justify-center items-center gap-1 cursor-pointer"
-                    onClick={() => deleteTicketHandle(viewDetails.id)}
+                    className={
+                      appUser.role === "admin"
+                        ? "flex justify-center items-center gap-1 cursor-pointer"
+                        : "hidden"
+                    }
+                    onClick={handleOpenDel}
                   >
                     {" "}
                     <img src={deleteTicket} alt="" />
@@ -216,7 +325,7 @@ const Home = () => {
                 >
                   <option value="All tickets (24)">
                     All tickets (
-                    {appUser.role == "admin" ? totalTickets : totalTickets2})
+                    {appUser.role === "admin" ? totalTickets : totalTickets2})
                   </option>
                   <option value="opened tickets">Opened Tickets</option>
                   <option value="closed tickets">Closed Tickets</option>
@@ -225,7 +334,7 @@ const Home = () => {
             </section>
             {/* Tickets */}
             <section className="mt-10">
-              {appUser.role == "admin"
+              {appUser.role === "admin"
                 ? ticketData
                     .slice(0)
                     .reverse()
@@ -250,6 +359,8 @@ const Home = () => {
                         CloseTicket={() => closeTicket(tickets.id)}
                         DeleteTicket={() => deleteTicketHandle(tickets.id)}
                         TicketPage={`/ticketDetails/${tickets.id}`}
+                        handleOpenDel={handleOpenDel}
+                        setAssignID={() => setAssignID(tickets)}
                       />
                     ))
                 : ticketData2
@@ -274,8 +385,9 @@ const Home = () => {
                         editTicketMod={editTicketMod}
                         HandleOpenModal={handleOpenModal}
                         CloseTicket={() => closeTicket(tickets.id)}
-                        DeleteTicket={() => deleteTicketHandle(tickets.id)}
+                        // DeleteTicket={() => deleteTicketHandle(tickets.id)}
                         TicketPage={`/ticketDetails/${tickets.id}`}
+                        handleOpenDel={handleOpenDel}
                       />
                     ))}
               {skloader &&
@@ -284,7 +396,7 @@ const Home = () => {
                 rowsPerPageOptions={[10, 15, 20]}
                 component="div"
                 count={
-                  appUser.role == "admin"
+                  appUser.role === "admin"
                     ? ticketData.length
                     : ticketData2.length
                 }

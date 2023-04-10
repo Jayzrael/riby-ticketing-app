@@ -51,6 +51,7 @@ const AgentLogin = () => {
         console.log(JSON.stringify(res.data.user));
 
         localStorage.setItem("user", JSON.stringify(res.data.user));
+        localStorage.setItem("agentToken", JSON.stringify(res.data.token));
 
         signIn({
           token: res.data.token,

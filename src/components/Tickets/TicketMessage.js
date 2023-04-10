@@ -23,7 +23,7 @@ const TicketMessage = ({ ticketDetails, replyHandle, openReply, skloader }) => {
       <div className="bg-white mt-7 min-w-[97.6vh] min-h-[90vh] rounded-[10px]">
         <div className="flex justify-between items-center bg-white p-5 rounded-[10px]">
           <div>
-            #{ticketDetails?.tag} <span>{ticketDetails?.title} </span>
+            #{ticketDetails?.ticketId} <span>{ticketDetails?.title} </span>
           </div>
           <img
             className="relative cursor-pointer"
@@ -54,8 +54,8 @@ const TicketMessage = ({ ticketDetails, replyHandle, openReply, skloader }) => {
         )}
         {/* message */}
         <section className="flex justify-center items-center mt-2">
-          <div className="w-full min-h-[50vh] bg-white rounded-[10px] border-[0.5px] border-[#D9D8DA] border-solid mt-[26px]">
-            <p className="text-[16px] font-[300] text-[#0D233D] leading-6 bg-white ml-[24px] mt-[46px]">
+          <div className="w-full max-w-[1000px] min-h-[50vh] bg-white rounded-[10px] border-[0.5px] border-[#D9D8DA] border-solid mt-[26px]">
+            <p className="text-[16px] break-words font-[300] text-[#0D233D] leading-6 bg-white ml-[24px] mt-[46px]">
               {ticketDetails?.reason}
             </p>
             {skloader &&

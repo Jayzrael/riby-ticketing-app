@@ -29,13 +29,13 @@ const Sidebar = () => {
       className: "flex gap-4 p-4 cursor-pointer hover:text-red-500",
       linkTo: "/analytics",
     },
-    {
-      id: 4,
-      item: "Chats",
-      img: "/chats.png",
-      className: "flex gap-4 p-4 cursor-pointer hover:text-red-500",
-      linkTo: "/chats",
-    },
+    // {
+    //   id: 4,
+    //   item: "Chats",
+    //   img: "/chats.png",
+    //   className: "flex gap-4 p-4 cursor-pointer hover:text-red-500",
+    //   linkTo: "/chats",
+    // },
   ];
 
   const agentNav = [
@@ -60,13 +60,13 @@ const Sidebar = () => {
       className: "flex gap-4 p-4 cursor-pointer hover:text-red-500",
       linkTo: "/analytics",
     },
-    {
-      id: 4,
-      item: "Chats",
-      img: "/chats.png",
-      className: "flex gap-4 p-4 cursor-pointer hover:text-red-500",
-      linkTo: "/chats",
-    },
+    // {
+    //   id: 4,
+    //   item: "Chats",
+    //   img: "/chats.png",
+    //   className: "flex gap-4 p-4 cursor-pointer hover:text-red-500",
+    //   linkTo: "/chats",
+    // },
   ];
 
   return (

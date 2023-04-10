@@ -82,7 +82,7 @@ const Navbar = () => {
               <StyledAvatar>
                 {appUser.role == "admin"
                   ? appUser.firstName[0] + appUser.lastName[0]
-                  : appUser._doc.firstname[0] + appUser._doc.lastname[0]}
+                  : appUser.firstname[0] + appUser.lastname[0]}
               </StyledAvatar>
             </Link>
           </div>

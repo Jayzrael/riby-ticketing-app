@@ -1,17 +1,11 @@
 import React, { useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
-import AgentCard from "../lists/AgentCard";
 import { useState } from "react";
 import Chart from "react-apexcharts";
 import AnalyticsCard from "../components/AnalyticsCard";
 import ResponseCard from "../components/ResponseCard";
-import { AiFillStar } from "react-icons/ai";
-import GreenReview from "../assets/greenreview.png";
-import YellowReview from "../assets/yellowreview.png";
-import RedReview from "../assets/redreview.png";
-import { GoPrimitiveDot } from "react-icons/go";
-import axios, { BaseUrl } from "../Api/axios";
+import { BaseUrl, PlainReq } from "../Api/axios";
 import CountCards from "../components/CountCards";
 
 const Analytics = () => {
@@ -19,8 +13,16 @@ const Analytics = () => {
   const [count2, setCount2] = useState();
   const [count3, setCount3] = useState();
   const [count4, setCount4] = useState();
+  const [count5, setCount5] = useState();
+  const [count6, setCount6] = useState();
+  const [count7, setCount7] = useState();
 
   // const appUser = useContext(UserContext);
+  const who = localStorage.getItem("user");
+  const appUser = JSON.parse(who);
+
+  const adminToken = localStorage.getItem("token");
+  const AdminToken = JSON.parse(adminToken);
 
   const [state, setState] = useState({
     options: {
@@ -50,33 +52,36 @@ const Analytics = () => {
   const AgentCard2 = [
     {
       Title: "Total Open Tickets",
-      Count: count2,
+      Count: appUser.role === "admin" ? count2 : count5,
       CountColor: "text-[18px] font-[600] text-orange-400",
     },
     {
       Title: "Total Closed Tickets",
-      Count: count3,
+      Count: appUser.role === "admin" ? count3 : count6,
       CountColor: "text-[18px] font-[600] text-green-600",
     },
     {
       Title: "Total Overdue Tickets",
-      Count: count4,
+      Count: appUser.role === "admin" ? count4 : 0,
       CountColor: "text-[18px] font-[600] text-red-500",
     },
   ];
 
   const AgentCard3 = [
     {
-      Title: "Total Closed Tickets",
-      Count: count3,
+      Title: "Total Incoming Calls",
+      Count: 0,
       CountColor: "text-[18px] font-[600] text-green-600",
     },
     {
-      Title: "Total Overdue Tickets",
-      Count: count4,
+      Title: "Total Outgoing Calls",
+      Count: 0,
       CountColor: "text-[18px] font-[600] text-red-500",
     },
   ];
+
+  const agentToken = localStorage.getItem("agentToken");
+  const token = JSON.parse(agentToken);
 
   useEffect(() => {
     var config = {
@@ -85,14 +90,14 @@ const Analytics = () => {
       headers: {},
     };
 
-    axios(config)
+    PlainReq(config)
       .then(function (response) {
         setCount(response.data.numberOfAgents);
       })
       .catch(function (error) {
         console.log(error);
       });
-  });
+  }, []);
 
   useEffect(() => {
     var config = {
@@ -101,24 +106,28 @@ const Analytics = () => {
       headers: {},
     };
 
-    axios(config)
+    PlainReq(config)
       .then(function (response) {
         setCount2(response.data.tickets.length);
       })
       .catch(function (error) {
         console.log(error);
       });
-  });
+  }, []);
 
   useEffect(() => {
     var config = {
       method: "get",
-      url: `${BaseUrl}/tickets/closed`,
-      headers: {},
+      url: `${BaseUrl}tickets/closed`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${AdminToken}`,
+      },
     };
 
-    axios(config)
+    PlainReq(config)
       .then(function (response) {
+        console.log("closssssssed", response.data);
         setCount3(response.data.closedTickets);
       })
       .catch(function (error) {
@@ -129,21 +138,49 @@ const Analytics = () => {
   useEffect(() => {
     var config = {
       method: "get",
-      url: `${BaseUrl}/tickets/overdue`,
-      headers: {},
+      url: `${BaseUrl}tickets/overdue`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${AdminToken}`,
+      },
     };
 
-    axios(config)
+    PlainReq(config)
       .then(function (response) {
         setCount4(response.data.overdueTickets);
       })
       .catch(function (error) {
         console.log(error);
       });
-  });
+  }, []);
 
-  const who = localStorage.getItem("user");
-  const appUser = JSON.parse(who);
+  useEffect(() => {
+    var config = {
+      method: "get",
+      url: "https://dev-apis.riby.ng/cus/api/v1/tickets/agent",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    PlainReq(config)
+      .then((res) => {
+        console.log("agent tickets", res.data.tickets);
+        const agentTickets = res.data.tickets;
+        const opened = agentTickets.filter(
+          (ticket) => ticket.status === "open"
+        );
+        const closed = agentTickets.filter(
+          (ticket) => ticket.status === "closed"
+        );
+        setCount5(opened.length);
+        setCount6(closed.length);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <div className="flex">

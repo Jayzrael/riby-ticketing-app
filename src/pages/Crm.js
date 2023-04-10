@@ -8,7 +8,7 @@ import CustomerFormPage from "../components/CustomerFormPage";
 import CrmTable from "../components/CrmTable";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import axios, { BaseUrl } from "../Api/axios";
+import axios, { BaseUrl, PlainReq } from "../Api/axios";
 
 const style = {
   position: "absolute",
@@ -35,6 +35,9 @@ const Crm = () => {
   const handleMenu = () => {
     setDrop(!drop);
   };
+
+  const agentToken = localStorage.getItem("agentToken");
+  const token = JSON.parse(agentToken);
 
   const whoIs = localStorage.getItem("user");
   const appUser = JSON.parse(whoIs);
@@ -69,10 +72,13 @@ const Crm = () => {
     var config = {
       method: "get",
       url: `${BaseUrl}/tickets/agent`,
-      headers: {},
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     };
 
-    axios(config)
+    PlainReq(config)
       .then((res) => {
         console.log("agent tickets", res.data.tickets);
         setTicketData2(res.data.tickets);
@@ -121,7 +127,7 @@ const Crm = () => {
           <div className="mt-16 ">
             <CrmTable
               Search={search}
-              ticketData={appUser.role == "admin" ? ticketData : ticketData2}
+              ticketData={appUser.role === "admin" ? ticketData : ticketData2}
               TicketPage="/ticketDetails"
               skloader={skloader}
             />

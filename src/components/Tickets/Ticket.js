@@ -1,25 +1,21 @@
 // import { Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
-import { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
-// import { Link } from "react-router-dom";
-import axios, { BaseUrl } from "../../Api/axios";
+import { Link } from "react-router-dom";
 import dots from "../../assets/dots.png";
 import TicketMenu1 from "../MenuItem/TicketMenu1";
 import TicketMenu2 from "../MenuItem/TicketMenu2";
-import EditTicket from "./EditTicket";
-import TicketDetails from "./TicketDetails";
 
 const Ticket = ({
   ticket,
   TicketTime,
   HandleOpenModal,
   CloseTicket,
-  DeleteTicket,
   ViewTicketDetail,
   TicketPage,
   editTicketMod,
+  handleOpenDel,
   HandleTicketMod,
+  setAssignID,
 }) => {
   const [drop, setDrop] = useState(false);
   // const [viewDetails, setViewDetails] = useState({});
@@ -78,7 +74,7 @@ const Ticket = ({
               <Link to={TicketPage}>{ticket.title}</Link>
             </h2>
             <div className="flex justify-center items-center gap-2">
-              <h4 className="text-[10px] text-[#EE095B] font-bold">
+              <h4 className="text-[10px] text-[#EE095B] font-bold whitespace-nowrap w-[200px] m-0 overflow-hidden text-ellipsis">
                 {ticket.reason}
               </h4>{" "}
               <span className="text-[10px] text-[#BFBEC2]">{TicketTime}</span>{" "}
@@ -98,14 +94,16 @@ const Ticket = ({
               onClick={handleClick}
             />
           </button>
-          {appUser.role == "admin" ? (
+          {appUser.role === "admin" ? (
             <TicketMenu1
               anchorEl={anchorEl}
               open={open}
               handleClose={handleClose}
               HandleOpenModal={HandleOpenModal}
               CloseTicket={CloseTicket}
-              DeleteTicket={DeleteTicket}
+              // DeleteTicket={DeleteTicket}
+              handleOpenDel={handleOpenDel}
+              setAssignID={setAssignID}
             />
           ) : (
             <TicketMenu2

@@ -7,7 +7,8 @@ const TicketMenu1 = ({
   handleClose,
   HandleOpenModal,
   CloseTicket,
-  DeleteTicket,
+  handleOpenDel,
+  setAssignID,
 }) => {
   return (
     <Menu
@@ -22,6 +23,7 @@ const TicketMenu1 = ({
       <MenuItem
         onClick={() => {
           handleClose();
+          setAssignID();
           HandleOpenModal();
         }}
       >
@@ -38,7 +40,8 @@ const TicketMenu1 = ({
       <MenuItem
         onClick={() => {
           handleClose();
-          DeleteTicket();
+          setAssignID();
+          handleOpenDel();
         }}
       >
         Delete Ticket

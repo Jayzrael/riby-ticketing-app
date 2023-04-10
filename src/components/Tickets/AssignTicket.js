@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MutatingDots } from "react-loader-spinner";
 
-const AssignTicket = ({ CloseModal, viewDetails, getData }) => {
+const AssignTicket = ({ CloseModal, viewDetails }) => {
   const [selectAgent, setSelectAgent] = useState([]);
   const [agent, setAgent] = useState("");
   const [loading, setLoading] = useState(false);
@@ -27,7 +27,7 @@ const AssignTicket = ({ CloseModal, viewDetails, getData }) => {
         console.log(error);
       });
   }, []);
-
+  console.log("viewdetails o", viewDetails);
   const assign = (id) => {
     setLoading(true);
 

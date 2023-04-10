@@ -211,7 +211,7 @@ const Profile = () => {
                       value={
                         appUser.role === "admin"
                           ? appUser.firstName
-                          : appUser._doc.firstname
+                          : appUser.firstname
                       }
                       readOnly
                       id="firstname"
@@ -231,7 +231,7 @@ const Profile = () => {
                       value={
                         appUser.role === "admin"
                           ? appUser.lastName
-                          : appUser._doc.lastname
+                          : appUser.lastname
                       }
                       readOnly
                       id="lastname"
@@ -251,9 +251,7 @@ const Profile = () => {
                     type="text"
                     name="email"
                     value={
-                      appUser.role === "admin"
-                        ? appUser.email
-                        : appUser._doc.email
+                      appUser.role === "admin" ? appUser.email : appUser.email
                     }
                     readOnly
                     id="email"
@@ -272,7 +270,7 @@ const Profile = () => {
                 <h1 className="text-[18px] font-[600] text-[#0D233D]">
                   {appUser.role === "admin"
                     ? appUser.firstName + " " + appUser.lastName
-                    : appUser._doc.firstname + " " + appUser._doc.lastname}
+                    : appUser.firstname + " " + appUser.lastname}
                 </h1>
                 <p className="text-[#EE095B] text-[14px] font-[600] cursor-pointer">
                   Edit Photo
